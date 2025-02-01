@@ -13,7 +13,7 @@ const ButtonStyle = tv({
 
 type Props = VariantProps<typeof ButtonStyle> & {
   children: ReactNode;
-  onClickFn: () => void;
+  onClickFn?: () => void;
   type: "submit" | "reset" | "button" | undefined;
 };
 
