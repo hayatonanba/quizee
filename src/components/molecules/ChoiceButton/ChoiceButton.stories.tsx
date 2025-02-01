@@ -1,19 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 import ChoiceButton from "./ChoiceButton";
 
 type T = typeof ChoiceButton;
 
 export default {
-  title: 'molecules/ChoiceButton',
+  title: "molecules/ChoiceButton",
   component: ChoiceButton,
 } satisfies Meta<T>;
 
 export const Default: StoryObj<T> = {
   render: () => {
     return (
-      <div className='w-1/3'>
-        <ChoiceButton text='モホロビチッチ不連続面' onClickFn={() => alert("正解")} />
+      <div className="w-1/3">
+        <ChoiceButton
+          text="モホロビチッチ不連続面"
+          onClickFn={() => alert("正解")}
+        />
       </div>
-    )
-  }
+    );
+  },
 };
