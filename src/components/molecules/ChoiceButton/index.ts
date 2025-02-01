@@ -1,1 +1,1 @@
-export { default as ChoiceButton } from "./ChoiceButton"
+export { default as ChoiceButton } from "./ChoiceButton";
