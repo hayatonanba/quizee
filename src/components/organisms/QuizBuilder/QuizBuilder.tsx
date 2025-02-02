@@ -59,7 +59,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
             <>
               <ChoiceInput
                 field={field}
-                placeholder={`${index + 1}目の選択肢`}
+                placeholder={`${index + 1}つ目の選択肢`}
                 option={options[index]}
                 handleCheckBoxChange={() => handleCheckboxChange(options[index].id)}
                 handleRemoveOption={() => removeOption(index)}
