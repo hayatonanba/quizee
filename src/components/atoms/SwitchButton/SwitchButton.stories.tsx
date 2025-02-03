@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { SwitchButton } from "./SwitchButton";
+import SwitchButton  from "./SwitchButton";
 import { useState } from "react";
 
 type T = typeof SwitchButton;
