@@ -3,7 +3,7 @@ type Props = {
   handleToggle: () => void;
 };
 
-export const SwitchButton = ({ isChecked = false, handleToggle }: Props) => {
+export default function SwitchButton({ isChecked = false, handleToggle }: Props) {
   return (
     <button
       type="button"
