@@ -1,6 +1,6 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ChangeEvent, Ref } from "react";
+import type { ChangeEvent, Ref } from "react";
 
 type FieldProps = {
   name: string;
@@ -34,26 +34,26 @@ export default function ChoiceInput({
   isRemovable,
 }: Props) {
   return (
-    <div className={`flex items-center border border-black rounded-xl`}>
-      <div className="w-[45px] h-[40px] grid place-content-center border-black border-r">
+    <div className="flex items-center rounded-xl border border-black">
+      <div className="grid h-[40px] w-[45px] place-content-center border-black border-r">
         <input
           checked={option.isCorrect}
           onChange={handleCheckBoxChange}
           type="checkbox"
-          className="m-2 border-black border-l size-[15px]"
+          className="m-2 size-[15px] border-black border-l"
         />
       </div>
       <input
         {...field}
         type="text"
-        className="flex-1  p-2 focus:outline-none rounded-xl"
+        className="flex-1 rounded-xl p-2 focus:outline-none"
         placeholder={placeholder}
       />
-      <div className="w-[45px] h-[40px] grid place-content-center">
+      <div className="grid h-[40px] w-[45px] place-content-center">
         {isRemovable && !option.isCorrect && (<button
           type="button"
           onClick={handleRemoveOption}
-          className="ml-2 p-1 rounded"
+          className="ml-2 rounded p-1"
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>)}

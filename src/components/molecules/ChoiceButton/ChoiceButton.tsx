@@ -6,7 +6,8 @@ type Props = {
 export default function ChoiceButton({ onClickFn, text }: Props) {
   return (
     <button
-      className="border border-black w-full text-[1rem] rounded-full py-2"
+      type="button"
+      className="w-full rounded-full border border-black py-2 text-[1rem]"
       onClick={onClickFn}
     >
       {text}
