@@ -1,6 +1,6 @@
 import { quizSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useForm, type UseFormReturn } from "react-hook-form";
 import { create } from "zustand";
 
 export type QuizFormData = {

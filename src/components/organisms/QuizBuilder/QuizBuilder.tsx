@@ -1,9 +1,9 @@
 import { ChoiceInput } from "@/components/molecules/ChoiceInput";
-import { Controller, useFieldArray, UseFormReturn } from "react-hook-form";
+import { Controller, useFieldArray, type UseFormReturn } from "react-hook-form";
 import { Button } from "../../atoms/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { QuizFormData } from "@/store/useQuizStore";
+import type { QuizFormData } from "@/store/useQuizStore";
 
 
 export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData> }) {
@@ -43,7 +43,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
           <>
             <input
               {...field}
-              className="w-full p-2 border-b border-black focus:outline-none text-[1.3rem]"
+              className="w-full border-black border-b p-2 text-[1.3rem] focus:outline-none"
               placeholder="問題文"
             />
             {errors.question && <p className="text-red-500">{errors.question.message}</p>}
@@ -65,7 +65,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
                 handleRemoveOption={() => removeOption(index)}
                 isRemovable={fields.length > 2}
               />
-              {errors.options && <p className="text-red-500 text-[0.8rem]">{errors.options?.[index]?.text?.message}</p>}
+              {errors.options && <p className="text-[0.8rem] text-red-500">{errors.options?.[index]?.text?.message}</p>}
             </>
           )}
         />

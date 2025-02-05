@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { tv, VariantProps } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 
 type Props = {
   streakCount: number;
@@ -12,7 +12,7 @@ const StreakCountTextStyle = tv({
       black: "text-black",
       green: "text-[#1fc74c]",
       bronze: "text-[#b87333]",
-      sliver: "text-[#808080]",
+      silver: "text-[#808080]",
       gold: "text-[#c09b16]",
     },
   },
@@ -21,15 +21,17 @@ const StreakCountTextStyle = tv({
 const streakCountToColor = (streakCount: number) => {
   if (streakCount >= 0 && streakCount <= 4) {
     return "black";
-  } else if (streakCount >= 5 && streakCount <= 9) {
-    return "green";
-  } else if (streakCount >= 10 && streakCount <= 49) {
-    return "bronze";
-  } else if (streakCount >= 50 && streakCount <= 99) {
-    return "sliver";
-  } else if (streakCount >= 100) {
-    return "gold";
   }
+  if (streakCount >= 5 && streakCount <= 9) {
+    return "green";
+  }
+  if (streakCount >= 10 && streakCount <= 49) {
+    return "bronze";
+  }
+  if (streakCount >= 50 && streakCount <= 99) {
+    return "silver";
+  }
+  return "gold";
 };
 
 export default function StreakBubbleWithIcon({ streakCount }: Props) {
@@ -42,7 +44,7 @@ export default function StreakBubbleWithIcon({ streakCount }: Props) {
           alt=""
           width={45}
           height={45}
-          className="border rounded-full absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+          className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full border"
         />
       </div>
       <h2
