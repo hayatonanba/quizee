@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from "tailwind-variants";
 
 const BadgeStyle = tv({
-  base: "px-2 py-[3px] w-max rounded-md text-[0.8rem]",
+  base: "px-2 py-[1px] w-max rounded-md text-[0.8rem]",
   variants: {
     varient: {
       public: "bg-green-300",
