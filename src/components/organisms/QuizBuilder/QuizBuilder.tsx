@@ -79,7 +79,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
             size="sm"
           >
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faPlus} />選択肢を追加する
+              <FontAwesomeIcon icon={faPlus} className="size-[20px]"/>選択肢を追加する
             </div>
           </Button>
         </div>
