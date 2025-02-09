@@ -7,9 +7,6 @@ export const UserSchema = z.object({
   name: z.string().nullable().openapi({
     example: "y_ta"
   }),
-  email: z.string().nullable().openapi({
-    example: "xxxxx@gmail.com"
-  }),
   image: z.string().nullable().openapi({
     example: "https://avatars.githubusercontent.com/u/129815120?v=4"
   }),
@@ -28,10 +25,20 @@ export const QuizSchema = z.object({
   id: z.number().openapi({
     example: 1
   }),
-  question: z.string().openapi({
+  question: z.string().min(30).openapi({
     example: "問題文"
   }),
-  choices: z.array(ChoiseSchema).openapi({
+  choices: z.array(ChoiseSchema).min(2).max(4).openapi({
+    example: [
+      {
+        "text": "example",
+        "isCorrect": false
+      },
+      {
+        "text": "instance",
+        "isCorrect": true
+      },
+    ],
   }),
   isPublic: z.boolean().openapi({
     example: false
@@ -46,18 +53,18 @@ export const QuizSchema = z.object({
 })
 
 export const CreateQuizSchema = z.object({
-  question: z.string().min(1).openapi({
+  question: z.string().min(30).openapi({
     example: "新しいクイズ"
   }),
-  choices: z.array(ChoiseSchema).openapi({
+  choices: z.array(ChoiseSchema).min(2).max(4).openapi({
     example: [
       {
         "text": "aaaaaaaa",
-        "isCorrect": false
+        "isCorrect": false,
       },
       {
         "text": "bbbbbb",
-        "isCorrect": true
+        "isCorrect": true,
       },
     ],
   }),

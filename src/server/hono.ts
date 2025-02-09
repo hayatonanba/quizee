@@ -1,6 +1,6 @@
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { createQuizHandler } from "./controllers/quiz/getQuizees";
+import { createQuizHandler } from "./controllers/quiz/postQuiz";
 import { createQuizRoute } from "./routes/quizRoutes";
 
 export const app = new OpenAPIHono().basePath("/api");
