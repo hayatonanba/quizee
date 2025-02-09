@@ -13,6 +13,18 @@ export const UserSchema = z.object({
 });
 
 export const ChoiseSchema = z.object({
+  id: z.number().openapi({
+  example: 1
+  }),
+  text: z.string().min(1).openapi({
+    example: "クイズの選択肢"
+  }),
+  isCorrect: z.boolean().openapi({
+    example: false
+  })
+})
+
+export const CreateChoiceSchema = z.object({
   text: z.string().min(1).openapi({
     example: "クイズの選択肢"
   }),
@@ -31,10 +43,12 @@ export const QuizSchema = z.object({
   choices: z.array(ChoiseSchema).min(2).max(4).openapi({
     example: [
       {
+        "id": 1,
         "text": "example",
         "isCorrect": false
       },
       {
+        "id": 2,
         "text": "instance",
         "isCorrect": true
       },
@@ -62,7 +76,7 @@ export const CreateQuizSchema = z.object({
   question: z.string().min(1).max(30).openapi({
     example: "新しいクイズ"
   }),
-  choices: z.array(ChoiseSchema).min(2).max(4).openapi({
+  choices: z.array(CreateChoiceSchema).min(2).max(4).openapi({
     example: [
       {
         "text": "aaaaaaaa",
@@ -79,5 +93,29 @@ export const CreateQuizSchema = z.object({
   })
 })
 
+export const UpdateQuizSchema = z.object({
+  question: z.string().min(1).max(30).openapi({
+    example: "問題文の更新"
+  }),
+  choices: z.array(ChoiseSchema).min(2).max(4).openapi({
+    example: [
+      {
+        "id": 1,
+        "text": "example",
+        "isCorrect": false
+      },
+      {
+        "id": 2,
+        "text": "instance",
+        "isCorrect": true
+      },
+    ],
+  }),
+  isPublic: z.boolean().openapi({
+    example: false
+  }),
+})
+
 export type QuizId = z.infer<typeof QuizIdSchema>;
 export type CreateQuiz = z.infer<typeof CreateQuizSchema>;
+export type UpdateQuiz = z.infer<typeof UpdateQuizSchema>;
