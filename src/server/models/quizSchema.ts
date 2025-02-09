@@ -25,7 +25,7 @@ export const QuizSchema = z.object({
   id: z.number().openapi({
     example: 1
   }),
-  question: z.string().min(30).openapi({
+  question: z.string().min(1).max(30).openapi({
     example: "問題文"
   }),
   choices: z.array(ChoiseSchema).min(2).max(4).openapi({
@@ -53,7 +53,7 @@ export const QuizSchema = z.object({
 })
 
 export const CreateQuizSchema = z.object({
-  question: z.string().min(30).openapi({
+  question: z.string().min(1).max(30).openapi({
     example: "新しいクイズ"
   }),
   choices: z.array(ChoiseSchema).min(2).max(4).openapi({

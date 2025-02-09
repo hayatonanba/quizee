@@ -26,7 +26,13 @@ export const createQuizHandler: RouteHandler<typeof createQuizRoute> = async (c)
     },
     include: {
       choices: true,
-      user: true
+      user: {
+        select: {
+          id: true,
+          name: true,
+          image: true
+        }
+      }
     }
   })
 
