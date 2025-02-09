@@ -52,6 +52,12 @@ export const QuizSchema = z.object({
   user: UserSchema,
 })
 
+export const QuizIdSchema = z.object({
+  quizId: z.string().openapi({ 
+    example: "1"
+  }),
+});
+
 export const CreateQuizSchema = z.object({
   question: z.string().min(1).max(30).openapi({
     example: "新しいクイズ"
@@ -73,4 +79,5 @@ export const CreateQuizSchema = z.object({
   })
 })
 
+export type QuizId = z.infer<typeof QuizIdSchema>;
 export type CreateQuiz = z.infer<typeof CreateQuizSchema>;
