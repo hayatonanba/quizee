@@ -14,7 +14,7 @@ export default function QuizBuildHeader({ onClickFn, isChecked, handleToggle }: 
 
   return (
     <div className="border-gray-300 border-b">
-      <header className="container mx-auto flex h-[70px] items-center justify-between">
+      <header className="container mx-auto flex h-[70px] items-center justify-between px-3">
         <Link href="/home"><FontAwesomeIcon className="size-7" icon={faArrowLeft} /></Link>
         <div className="flex items-center gap-5">
           <SwitchButton handleToggle={handleToggle} isChecked={isChecked} />
