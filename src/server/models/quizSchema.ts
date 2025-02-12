@@ -72,6 +72,22 @@ export const QuizIdSchema = z.object({
   }),
 });
 
+export const QuerySchema = z.object({
+  page: z.string().openapi({
+    example: "1"
+  }),
+})
+
+export const MyQuizzesSchema = z.object({
+  quizzes: z.array(QuizSchema),
+  totalCount: z.number().openapi({
+    example: 1
+  }),
+  totalPages: z.number().openapi({
+    example: 1
+  })
+})
+
 export const CreateQuizSchema = z.object({
   question: z.string().min(1).max(30).openapi({
     example: "新しいクイズ"
