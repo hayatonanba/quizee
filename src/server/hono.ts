@@ -1,16 +1,18 @@
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { createQuizHandler } from "./controllers/quiz/postQuiz";
-import { createQuizRoute, deleteQuizRoute, updateQuizRoute } from "./routes/quizRoutes";
+import { createQuizRoute, deleteQuizRoute, getMyQuizzesRoute, updateQuizRoute } from "./routes/quizRoutes";
 import { deleteQuizHandler } from "./controllers/quiz/deleteQuiz";
 import { updateQuizHandler } from "./controllers/quiz/updateQuiz";
+import { getMyQuizzesHandler } from "./controllers/quiz/getMyQuizzes";
 
 export const app = new OpenAPIHono().basePath("/api");
 
 const quizApp = new OpenAPIHono()
   .openapi(createQuizRoute, createQuizHandler)
-  .openapi(deleteQuizRoute, deleteQuizHandler)
   .openapi(updateQuizRoute, updateQuizHandler)
+  .openapi(getMyQuizzesRoute, getMyQuizzesHandler)
+  .openapi(deleteQuizRoute, deleteQuizHandler)
 
 const route = app.route("/quzzies", quizApp);
 

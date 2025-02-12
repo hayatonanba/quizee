@@ -1,5 +1,24 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { CreateQuizSchema, QuizIdSchema, QuizSchema, UpdateQuizSchema } from "../models/quizSchema";
+import { CreateQuizSchema, MyQuizzesSchema, QuerySchema, QuizIdSchema, QuizSchema, UpdateQuizSchema } from "../models/quizSchema";
+
+export const getMyQuizzesRoute = createRoute({
+  path: "/mine",
+  method: "get",
+  description: "自分が作ったクイズの取得",
+  request: {
+    query: QuerySchema
+  },
+  responses: {
+    200:{
+      description:"成功",
+      content: {
+        "application/json":{
+          schema: MyQuizzesSchema
+        }
+      }
+    },
+  }
+})
 
 export const createQuizRoute = createRoute({
   path: "/",
