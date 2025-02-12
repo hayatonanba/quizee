@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import QuizCard, { type Props } from "./QuizCard";
+import QuizCard from "./QuizCard";
 
 type T = typeof QuizCard;
 
@@ -12,12 +12,11 @@ export default {
 export const Public: StoryObj<T> = {
   render: () => {
 
-    const quiz: Props["quiz"] = {
+    const quiz = {
       question: "ガリレオ衛星とはイオ・エウロパ・ガニメデと何？",
-      status: "public",
       choices: [
-        { text: "" },
-        { text: "" }
+        { text: "", isCorrect: true },
+        { text: "", isCorrect: false }
       ],
       updatedAt: "2025/01/24"
     }
@@ -28,7 +27,13 @@ export const Public: StoryObj<T> = {
 
     return (
       <div className='w-[600px]'>
-        <QuizCard quiz={quiz} handleSubmit={handleSubmit} />
+        <QuizCard
+          question={quiz.question}
+          choices={quiz.choices}
+          isPublic={true}
+          updatedAt={quiz.updatedAt}
+          handleSubmit={handleSubmit}
+        />
       </div>
     )
   }
@@ -37,12 +42,11 @@ export const Public: StoryObj<T> = {
 export const Private = {
   render: () => {
 
-    const quiz: Props["quiz"] = {
+    const quiz = {
       question: "ガリレオ衛星とはイオ・エウロパ・ガニメデと何？",
-      status: "private",
       choices: [
-        { text: "" },
-        { text: "" }
+        { text: "", isCorrect: true },
+        { text: "", isCorrect: false }
       ],
       updatedAt: "2025/01/24"
     }
@@ -53,7 +57,13 @@ export const Private = {
 
     return (
       <div className='w-[600px]'>
-        <QuizCard quiz={quiz} handleSubmit={handleSubmit} />
+        <QuizCard
+          question={quiz.question}
+          choices={quiz.choices}
+          isPublic={false}
+          updatedAt={quiz.updatedAt}
+          handleSubmit={handleSubmit}
+        />
       </div>
     )
   }
