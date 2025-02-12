@@ -135,3 +135,4 @@ export const UpdateQuizSchema = z.object({
 export type QuizId = z.infer<typeof QuizIdSchema>;
 export type CreateQuiz = z.infer<typeof CreateQuizSchema>;
 export type UpdateQuiz = z.infer<typeof UpdateQuizSchema>;
+export type Quiz = z.infer<typeof QuizSchema>

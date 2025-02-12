@@ -4,24 +4,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 
 export type Props = {
-  quiz: {
-    status: "public" | "private" | undefined,
-    question: string,
-    choices: Choice[],
-    updatedAt: string
-  },
+  question: string,
+  choices: {
+    text: string;
+    isCorrect: boolean;
+  }[],
+  isPublic: boolean,
+  updatedAt: string;
   handleSubmit: () => void
 }
 
-type Choice = {
-  text: string
-}
+export default function QuizCard({ question, choices, isPublic, updatedAt, handleSubmit }: Props) {
 
-export default function QuizCard({ quiz, handleSubmit }: Props) {
+  const status = isPublic ? "public" : "private"
+
   return (
-    <div className="flex h-[130px] flex-col justify-between rounded-xl border px-6 py-5">
+    <div className="flex h-[130px] flex-col justify-between rounded-xl border border-black px-6 py-5">
       <div className="flex items-center justify-between">
-        <h3 className="text-[1.2rem]">{quiz.question}</h3>
+        <h3 className="text-[1.2rem]">{question}</h3>
         <Popover>
           <PopoverTrigger asChild>
             <button type="button">
@@ -37,10 +37,10 @@ export default function QuizCard({ quiz, handleSubmit }: Props) {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <p className="text-[0.9rem]">選択肢数 : {quiz.choices.length}/4</p>
-          <Badge varient={quiz.status} />
+          <p className="text-[0.9rem]">選択肢数 : {choices.length}/4</p>
+          <Badge varient={status} />
         </div>
-        <p className="text-[0.9rem] text-gray-300">最終編集日：{quiz.updatedAt}</p>
+        <p className="text-[0.9rem] text-gray-300">最終編集日：{updatedAt}</p>
       </div>
     </div>
   );
