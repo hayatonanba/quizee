@@ -3,6 +3,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 
 type Props = {
   streakCount: number;
+  iconUrl: string;
 } & VariantProps<typeof StreakCountTextStyle>;
 
 const StreakCountTextStyle = tv({
@@ -34,13 +35,13 @@ const streakCountToColor = (streakCount: number) => {
   return "gold";
 };
 
-export default function StreakBubbleWithIcon({ streakCount }: Props) {
+export default function StreakBubbleWithIcon({ streakCount, iconUrl }: Props) {
   return (
-    <div className="flex items-end gap-5">
+    <div className="flex items-end gap-5 pr-[90px]">
       <div className="relative">
         <Image src="/hukidasi.png" alt="" width={90} height={90} />
         <Image
-          src="/icondemo.jpg"
+          src={iconUrl}
           alt=""
           width={45}
           height={45}
