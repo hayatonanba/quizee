@@ -1,19 +1,24 @@
+"use client"
+
 import { ChoiceButton } from "@/components/molecules/ChoiceButton";
 
 type Props = {
   question: string;
   author: string;
-  choiceList: ChoiceListType[];
+  choiceList: ChoiceType[];
 };
 
-type ChoiceListType = {
-  text: string;
-  onClickFn: () => void;
-};
+type ChoiceType = {
+  id: number,
+  text: string,
+  isCorrect: boolean
+}
+
+
 
 export default function QuizField({ question, author, choiceList }: Props) {
   return (
-    <div className="w-2/5 rounded-xl border border-black px-8 pt-4 pb-7">
+    <div className="rounded-xl border border-black px-8 pt-4 pb-7">
       <h2 className="mb-[0.5rem] text-[1.3rem]">Q. {question}</h2>
       <p className="mb-[0.7rem] text-right text-[0.9rem] text-gray-300">
         作問者 : {author}さん
@@ -22,7 +27,7 @@ export default function QuizField({ question, author, choiceList }: Props) {
         {choiceList.map((choice, i) => (
           <ChoiceButton
             text={choice.text}
-            onClickFn={choice.onClickFn}
+            onClickFn={() => console.log("yes")}
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={i}
           />

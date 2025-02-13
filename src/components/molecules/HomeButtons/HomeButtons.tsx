@@ -8,13 +8,13 @@ export default function HomeButtons() {
     <div className="flex gap-5">
       <Button size="sm" type="button">
         <Link className="flex items-center gap-2" href="/quiz/new">
-          <FontAwesomeIcon icon={faPencil} />
+          <FontAwesomeIcon icon={faPencil} className="size-[20px]"/>
           作問する
         </Link>
       </Button>
       <Button size="sm" type="button">
         <Link className="flex items-center gap-2" href="/quiz/my-list">
-          <FontAwesomeIcon icon={faList} />
+          <FontAwesomeIcon icon={faList} className="size-[20px]"/>
           作問リスト
         </Link>
       </Button>
