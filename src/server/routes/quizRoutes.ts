@@ -28,6 +28,30 @@ export const getQuizByIdRoute = createRoute({
   }
 })
 
+export const getRandomQuizRoute = createRoute({
+  path: "/random",
+  method: "get",
+  description: "ランダムなクイズを一問取得",
+  responses: {
+    200: {
+      description: "成功",
+      content: {
+        "application/json": {
+          schema: QuizSchema
+        }
+      }
+    },
+    404: {
+      description: "見つかりませんでした",
+      content: {
+        "application/json": {
+          schema: z.null()
+        }
+      }
+    }
+  }
+})
+
 export const getMyQuizzesRoute = createRoute({
   path: "/mine",
   method: "get",
