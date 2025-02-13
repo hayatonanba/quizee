@@ -14,8 +14,7 @@ export type QuizFormData = {
 
 type QuizStore = {
   newForm: () => UseFormReturn<QuizFormData>;
-  editForm: () => UseFormReturn<QuizFormData>;
-  setEditForm: (data: QuizFormData) => void;
+  editForm: (initialData: QuizFormData) => UseFormReturn<QuizFormData>;
 }
 
 export const useQuizStore = create<QuizStore>((set, get) => ({
@@ -30,16 +29,12 @@ export const useQuizStore = create<QuizStore>((set, get) => ({
         ],
       },
     }),
-  editForm: () =>
+  editForm: (initalData) =>
     useForm<QuizFormData>({
       resolver: zodResolver(quizSchema),
-      defaultValues: {
+      defaultValues: initalData ?? {
         question: "",
         options: [],
       },
     }),
-  setEditForm: (data: QuizFormData) => {
-    const form = get().editForm(); 
-    form.reset(data);
-  },
 }));

@@ -24,11 +24,11 @@ export default function QuizCard({ question, choices, isPublic, updatedAt, handl
         <h3 className="text-[1.2rem]">{question}</h3>
         <Popover>
           <PopoverTrigger asChild>
-            <button type="button">
-              <FontAwesomeIcon icon={faEllipsisVertical} />
+            <button type="button" className="relative z-10 flex h-[30px] w-[30px] items-center justify-center rounded-md border hover:bg-gray-100">
+              <FontAwesomeIcon icon={faEllipsisVertical} className="size-[20px]"/>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-[150px] rounded-md border px-3 py-2 shadow-md" align="end">
+          <PopoverContent className="relative z-10 w-[150px] rounded-md border px-3 py-2 shadow-md" align="end">
             <button type="button" className="flex items-center gap-2" onClick={handleSubmit}>
               <FontAwesomeIcon icon={faTrash} />削除する
             </button>
