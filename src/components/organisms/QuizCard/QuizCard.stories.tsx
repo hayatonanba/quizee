@@ -28,6 +28,7 @@ export const Public: StoryObj<T> = {
     return (
       <div className='w-[600px]'>
         <QuizCard
+          id={1}
           question={quiz.question}
           choices={quiz.choices}
           isPublic={true}
@@ -58,6 +59,7 @@ export const Private = {
     return (
       <div className='w-[600px]'>
         <QuizCard
+          id={1}
           question={quiz.question}
           choices={quiz.choices}
           isPublic={false}
