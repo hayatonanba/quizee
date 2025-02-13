@@ -5,7 +5,7 @@ import type { createQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
 export const createQuizHandler: RouteHandler<typeof createQuizRoute> = async (c) => {
-  const { question, choices } = await c.req.json<CreateQuiz>();
+  const { question, choices, isPublic } = await c.req.json<CreateQuiz>();
 
   const session = await auth()
 
@@ -17,6 +17,7 @@ export const createQuizHandler: RouteHandler<typeof createQuizRoute> = async (c)
     data:{
       userId: session.user.id,
       question,
+      isPublic,
       choices: {
         create: choices.map(choice => ({
           text: choice.text,

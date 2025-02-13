@@ -5,7 +5,7 @@ import type { updateQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
 export const updateQuizHandler: RouteHandler<typeof updateQuizRoute> = async (c) => {
-  const { question, choices } = await c.req.json<UpdateQuiz>()
+  const { question, choices, isPublic } = await c.req.json<UpdateQuiz>()
   const { quizId } = c.req.param()
   const session = await auth()
 
@@ -35,7 +35,8 @@ export const updateQuizHandler: RouteHandler<typeof updateQuizRoute> = async (c)
               isCorrect: choice.isCorrect,
             }
           })),
-        }
+        },
+        isPublic,
       },
       include: {
         choices: true,
