@@ -5,29 +5,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import type { QuizFormData } from "@/store/useQuizStore";
 
-
 export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData> }) {
-
-  const { control, watch, setValue, formState: { errors } } = Form
+  const { control, watch, setValue, formState: { errors } } = Form;
   const { fields, append, remove } = useFieldArray({ control, name: "options" });
   const options = watch("options");
 
-  const handleCheckboxChange = (id: number) => {
+  // ✅ 選択肢をチェックしたときに正解を更新
+  const handleCheckboxChange = (localId: number) => {
     setValue(
       "options",
       options.map((option) => ({
         ...option,
-        isCorrect: option.id === id,
+        isCorrect: option.localId === localId, // localId を基準にする
       }))
     );
   };
 
+  // ✅ 選択肢を追加 (localId を使用)
   const addOption = () => {
     if (fields.length < 4) {
-      append({ id: Date.now(), text: "", isCorrect: false });
+      append({
+        localId: Date.now(), //フロント用
+        text: "",
+        isCorrect: false,
+      });
     }
   };
 
+  // ✅ 選択肢を削除
   const removeOption = (index: number) => {
     if (fields.length > 2) {
       remove(index);
@@ -36,6 +41,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
 
   return (
     <form className="space-y-2">
+      {/* ✅ 問題文入力 */}
       <Controller
         name="question"
         control={control}
@@ -50,9 +56,11 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
           </>
         )}
       />
+
+      {/* ✅ 選択肢リスト */}
       {fields.map((option, index) => (
         <Controller
-          key={option.id}
+          key={option.localId} // localId を key にする
           name={`options.${index}.text`}
           control={control}
           render={({ field }) => (
@@ -60,8 +68,8 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
               <ChoiceInput
                 field={field}
                 placeholder={`${index + 1}つ目の選択肢`}
-                option={options[index]}
-                handleCheckBoxChange={() => handleCheckboxChange(options[index].id)}
+                option={option}
+                handleCheckBoxChange={() => handleCheckboxChange(option.localId)} // localId を渡す
                 handleRemoveOption={() => removeOption(index)}
                 isRemovable={fields.length > 2}
               />
@@ -70,7 +78,11 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
           )}
         />
       ))}
+
+      {/* ✅ バリデーションエラー */}
       {errors.options && <p className="text-red-500">{errors.options.message}</p>}
+
+      {/* ✅ 選択肢追加ボタン */}
       {fields.length < 4 && (
         <div className="flex justify-center">
           <Button
@@ -79,7 +91,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
             size="sm"
           >
             <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faPlus} className="size-[20px]"/>選択肢を追加する
+              <FontAwesomeIcon icon={faPlus} className="size-[20px]" />選択肢を追加する
             </div>
           </Button>
         </div>

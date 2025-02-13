@@ -25,10 +25,15 @@ export default async function Page({ params }: { params: { quizId: string } }) {
   }
 
   const { id, question, choices } = quiz
+
+  const choicesWithLocalId = choices.map((choice, index) => ({
+    ...choice,
+    localId: Date.now() + index, 
+  }));
   
   return (
     <>
-      <EditQuizTemplate id={id} question={question} choices={choices} />
+      <EditQuizTemplate id={id} question={question} choices={choicesWithLocalId} />
     </>
   );
 }

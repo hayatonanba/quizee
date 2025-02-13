@@ -13,7 +13,7 @@ export const UserSchema = z.object({
 });
 
 export const ChoiseSchema = z.object({
-  id: z.number().openapi({
+  id: z.number().optional().openapi({
   example: 1
   }),
   text: z.string().min(1).openapi({

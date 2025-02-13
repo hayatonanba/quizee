@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Choice = {
-  id: number;
+  localId: number;
+  id?: number ;
   text: string,
   isCorrect: boolean
 }
@@ -28,7 +29,8 @@ export default function EditQuizTemplate({ id, question, choices }: { id: number
   };
 
   const onSubmit = async (data: QuizFormData) => {
-    console.log(data.options)
+
+    const sanitizedChoices = data.options.map(({ localId, ...rest }) => rest);
 
     try {
       const res = await hono.api.quzzies[":quizId"].$put({
@@ -37,7 +39,7 @@ export default function EditQuizTemplate({ id, question, choices }: { id: number
         },
         json: {
           question: data.question,
-          choices: data.options,
+          choices: sanitizedChoices,
           isPublic: ispublished,
         }
       })

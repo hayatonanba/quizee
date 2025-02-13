@@ -6,7 +6,8 @@ import { create } from "zustand";
 export type QuizFormData = {
   question: string;
   options: {
-    id: number;
+    localId: number;
+    id?: number;
     text: string;
     isCorrect: boolean;
   }[];
@@ -24,8 +25,8 @@ export const useQuizStore = create<QuizStore>((set, get) => ({
       defaultValues: {
         question: "",
         options: [
-          { id: Date.now(), text: "", isCorrect: true },
-          { id: Date.now() + 1, text: "", isCorrect: false },
+          { localId: Date.now(), text: "", isCorrect: true },
+          { localId: Date.now() + 1, text: "", isCorrect: false },
         ],
       },
     }),

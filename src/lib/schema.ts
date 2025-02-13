@@ -5,7 +5,7 @@ export const quizSchema = z.object({
   options: z
     .array(
       z.object({
-        id: z.number(),
+        id: z.number().optional(),
         text: z.string().min(1, "選択肢を入力してください").max(10, "選択肢は10文字以内で入力してください"),
         isCorrect: z.boolean(),
       })
