@@ -1,3 +1,7 @@
+import { signOut } from "@/auth";
+import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import Image from "next/image";
 import { tv, type VariantProps } from "tailwind-variants";
 
@@ -7,7 +11,7 @@ type Props = {
 } & VariantProps<typeof StreakCountTextStyle>;
 
 const StreakCountTextStyle = tv({
-  base: "font-bold text-[2rem]",
+  base: "font-bold lg:text-[2rem] text-[1.5rem]",
   variants: {
     color: {
       black: "text-black",
@@ -40,13 +44,27 @@ export default function StreakBubbleWithIcon({ streakCount, iconUrl }: Props) {
     <div className="flex items-end gap-5 pr-[90px]">
       <div className="relative">
         <Image src="/hukidasi.png" alt="" width={90} height={90} />
-        <Image
-          src={iconUrl}
-          alt=""
-          width={45}
-          height={45}
-          className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full border"
-        />
+        <Popover>
+          <PopoverTrigger className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+            <Image
+              src={iconUrl}
+              alt=""
+              width={45}
+              height={45}
+              className="rounded-full border"
+            />
+          </PopoverTrigger>
+          <PopoverContent className="relative z-10 w-[150px] rounded-md border bg-white px-3 py-2 shadow-md" align="start">
+            <form action={async () => {
+              "use server"
+              await signOut({ redirectTo: "/" })
+            }}>
+              <button type="submit" className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faSignOut} className="size-[20px]" />ログアウト
+              </button>
+            </form>
+          </PopoverContent>
+        </Popover>
       </div>
       <h2
         className={StreakCountTextStyle({
