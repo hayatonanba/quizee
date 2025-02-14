@@ -9,7 +9,7 @@ type Props = {
 export default function MyListHeader({link}:Props) {
   return (
     <div className="border-gray-300 border-b">
-      <header className="container mx-auto flex h-[70px] items-center">
+      <header className="container mx-auto flex h-[70px] items-center px-3">
         <Link href={link}><FontAwesomeIcon className="size-7" icon={faArrowLeft} /></Link>
       </header>
     </div>
