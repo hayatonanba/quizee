@@ -14,7 +14,7 @@ type Choice = {
   isCorrect: boolean
 }
 
-export default function EditQuizTemplate({ id, question, choices }: { id: number, question: string, choices: Choice[] }) {
+export default function EditQuizTemplate({ id, question, choices, isPublic }: { id: number, question: string, choices: Choice[], isPublic: boolean }) {
 
   const router = useRouter()
   const Form = useQuizStore().editForm({
@@ -22,7 +22,7 @@ export default function EditQuizTemplate({ id, question, choices }: { id: number
     options: choices
   })
   const { handleSubmit } = Form;
-  const [ispublished, setIsPublished] = useState(false)
+  const [ispublished, setIsPublished] = useState(isPublic)
   const handleToggle = () => {
     const newChecked = !ispublished;
     setIsPublished(newChecked);

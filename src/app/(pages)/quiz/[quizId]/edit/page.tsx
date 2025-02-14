@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { quizId: string } }) {
     notFound()
   }
 
-  const { id, question, choices } = quiz
+  const { id, question, choices, isPublic } = quiz
 
   const choicesWithLocalId = choices.map((choice, index) => ({
     ...choice,
@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { quizId: string } }) {
   
   return (
     <>
-      <EditQuizTemplate id={id} question={question} choices={choicesWithLocalId} />
+      <EditQuizTemplate id={id} question={question} choices={choicesWithLocalId} isPublic={isPublic} />
     </>
   );
 }
