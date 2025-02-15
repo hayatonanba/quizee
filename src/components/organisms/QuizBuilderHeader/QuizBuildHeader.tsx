@@ -18,9 +18,11 @@ export default function QuizBuildHeader({ onClickFn, isChecked, handleToggle }: 
         <Link href="/home"><FontAwesomeIcon className="size-7" icon={faArrowLeft} /></Link>
         <div className="flex items-center gap-5">
           <SwitchButton handleToggle={handleToggle} isChecked={isChecked} />
-          <Button type="submit" size="sm" onClickFn={onClickFn}>
-            {isChecked ? "公開する": "保存する"}
-          </Button>
+          <div className={`rounded-full ${isChecked ? "bg-green-400": "bg-white"}`}>
+            <Button type="submit" size="sm" onClickFn={onClickFn}>
+              {isChecked ? "公開する" : "保存する"}
+            </Button>
+          </div>
         </div>
       </header>
     </div>
