@@ -78,6 +78,12 @@ export const QuerySchema = z.object({
   }),
 })
 
+export const CurrentStreakSchema = z.object({
+  currentStreak: z.number().openapi({
+    example: 1
+  })
+})
+
 export const MyQuizzesSchema = z.object({
   quizzes: z.array(QuizSchema),
   totalCount: z.number().openapi({
