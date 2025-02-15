@@ -5,9 +5,9 @@ import { hono } from "@/lib/hono/client";
 import type { Quiz } from "@/server/models/quizSchema";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns"
+import PagenationButton from "@/components/molecules/PagenationButton/PagenationButtons";
 
-export default function MyListTemplate({ quizzes }: { quizzes: Quiz[] }) {
-
+export default function MyListTemplate({ quizzes, totalPages, currentPage }: { quizzes: Quiz[], totalPages: number, currentPage: string }) {
   const router = useRouter()
 
   const handleDelete = async (quizId: string) => {
@@ -17,6 +17,10 @@ export default function MyListTemplate({ quizzes }: { quizzes: Quiz[] }) {
 
     router.refresh()
   }
+
+  const handleNavigation = (page: number) => {
+    router.push(`/quiz/my-list?page=${page}`);
+  };
 
   return (
     <div>
@@ -40,6 +44,7 @@ export default function MyListTemplate({ quizzes }: { quizzes: Quiz[] }) {
           )
         })}
       </div >
+      <PagenationButton totalPages={totalPages} currentPage={Number(currentPage)} prevFn={() => handleNavigation(Number(currentPage) - 1)} nextFn={() => handleNavigation(Number(currentPage) + 1)}/>
     </div >
   );
 }
