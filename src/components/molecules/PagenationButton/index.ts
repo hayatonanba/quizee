@@ -1,1 +1,1 @@
-export { default as Button } from "./PagenationButtons";
+export { default as Pagenation } from "./Pagenation";
