@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import PagenationButton from "./Pagenation";
+import PagenationButton from "./Pagination";
 
 type T = typeof PagenationButton;
 

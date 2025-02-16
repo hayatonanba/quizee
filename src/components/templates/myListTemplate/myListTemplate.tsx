@@ -1,5 +1,5 @@
 "use client";
-import PagenationButton from "@/components/molecules/PagenationButton/Pagenation";
+import PagenationButton from "@/components/molecules/Pagination/Pagination";
 import MyListHeader from "@/components/organisms/MyListHeader/MyListHeader";
 import { QuizCard } from "@/components/organisms/QuizCard";
 import { hono } from "@/lib/hono/client";
@@ -8,10 +8,10 @@ import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  quizzes: Quiz[]
-  totalPages: number
-  currentPage: string
-}
+  quizzes: Quiz[];
+  totalPages: number;
+  currentPage: string;
+};
 
 export default function MyListTemplate({
   quizzes,
