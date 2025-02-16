@@ -20,11 +20,11 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
   })
 
   const content = await res.json()
-  const { quizzes } = content
+  const { quizzes, totalPages } = content
 
   return (
     <>
-      <MyListTemplate quizzes={quizzes} />
+      <MyListTemplate quizzes={quizzes} totalPages={totalPages} currentPage={page} />
     </>
   );
 }
