@@ -26,7 +26,7 @@ model User {
   Authenticator Authenticator[]
 
   currentStreak Int @default(0)
-  currentQuizId Int? @unique
+  currentQuizId Int? 
   quizzes Quiz[]
  
   createdAt DateTime @default(now())
