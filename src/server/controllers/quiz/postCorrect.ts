@@ -25,9 +25,28 @@ export const createCorrectHandler: RouteHandler<typeof createCorrectRoute> = asy
 
   if (answer === correct?.choices[0].text) {
     ms = {message: "correct"}
+    await prisma.user.update({
+      where: {id: session.user.id},
+      data: {
+        currentStreak: {increment: 1}
+      }
+    })
   } else {
     ms = {message: "uncorrect"}
+    await prisma.user.update({
+      where: {id: session.user.id},
+      data: {
+        currentStreak: 0
+      }
+    })
   }
+
+  await prisma.user.update({
+    where: { id: session.user.id },
+    data: {
+      currentQuizId: null
+    }
+  })
 
   return c.json(ms, 201)
 }
