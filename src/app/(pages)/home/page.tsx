@@ -25,7 +25,7 @@ export default async function Page() {
     return <div>クイズがありません。</div>
   }
 
-  const { question, choices, user } = randomQuiz
+  const { question, choices, user, id } = randomQuiz
 
   return (
     <div className="mx-auto flex h-screen max-w-[700px] items-center justify-center px-3">
@@ -34,7 +34,7 @@ export default async function Page() {
           <StreakBubbleWithIcon iconUrl={session.user?.image ?? ""} streakCount={0} color="black" />
         </div>
         <div className="mb-[50px]">
-          <QuizField question={question} choiceList={choices} author={user.name as string} />
+          <QuizField id={id} question={question} choiceList={choices} author={user.name as string} />
         </div>
         <div className="flex justify-center">
           <HomeButtons />

@@ -1,11 +1,13 @@
 "use client"
 
 import { ChoiceButton } from "@/components/molecules/ChoiceButton";
+import { hono } from "@/lib/hono/client";
 
 type Props = {
   question: string;
   author: string;
   choiceList: ChoiceType[];
+  id: number;
 };
 
 type ChoiceType = {
@@ -14,9 +16,20 @@ type ChoiceType = {
   isCorrect: boolean
 }
 
+const handleSubmit = async (answer:string, id:number) => {
+  const res = await hono.api.quzzies[":quizId"].answer.$post({
+    param: {
+      quizId : String(id)
+    },
+    json: {
+      answer
+    }
+  })
+  await res.json()
+}
 
 
-export default function QuizField({ question, author, choiceList }: Props) {
+export default function QuizField({ question, author, choiceList, id }: Props) {
   return (
     <div className="rounded-xl border border-black px-8 pt-4 pb-7">
       <h2 className="mb-[0.5rem] text-[1.3rem]">Q. {question}</h2>
@@ -27,7 +40,7 @@ export default function QuizField({ question, author, choiceList }: Props) {
         {choiceList.map((choice, i) => (
           <ChoiceButton
             text={choice.text}
-            onClickFn={() => console.log("yes")}
+            onClickFn={() => handleSubmit(choice.text, id)}
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={i}
           />
