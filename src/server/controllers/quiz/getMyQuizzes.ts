@@ -5,7 +5,8 @@ import type { RouteHandler } from "@hono/zod-openapi";
 
 export const getMyQuizzesHandler: RouteHandler<typeof getMyQuizzesRoute> = async (c) => {
   const { page } = c.req.query()
-  const skip = (Number(page) -1) *10
+  const pageSize = 5
+  const skip = (Number(page) -1) * pageSize
   const session = await auth()
   
     if (!session?.user?.id) {
@@ -15,7 +16,7 @@ export const getMyQuizzesHandler: RouteHandler<typeof getMyQuizzesRoute> = async
   const quizzes = await prisma.quiz.findMany({
     where:  { userId: session.user.id },
     skip,
-    take: 10,
+    take: pageSize,
     include: {
       choices: true,
       user: {
@@ -29,7 +30,7 @@ export const getMyQuizzesHandler: RouteHandler<typeof getMyQuizzesRoute> = async
   })
 
   const totalCount = await prisma.quiz.count({ where: { userId: session.user.id } })
-  const totalPages = Math.ceil(totalCount / 10)
+  const totalPages = Math.ceil(totalCount / pageSize)
 
   return c.json({quizzes,totalCount,totalPages},200)
 }

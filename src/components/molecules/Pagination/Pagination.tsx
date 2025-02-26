@@ -9,8 +9,7 @@ type Props = {
     nextFn: () => void
 }
 
-export default function PagenationButton({totalPages, currentPage, prevFn, nextFn}: Props) {
-    
+export default function PagenationButton({totalPages, currentPage, prevFn, nextFn}: Props) {   
     return (
     <div className="flex justify-center gap-5 p-16">
       { currentPage > 1 && <Button size="sm" type="button" onClickFn={prevFn}>

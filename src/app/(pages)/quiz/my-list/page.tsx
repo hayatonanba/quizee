@@ -6,7 +6,7 @@ type SearchParams = { page: string }
 
 export default async function Page({ searchParams }: { searchParams: SearchParams }) {
 
-  const { page } = searchParams
+  const page = searchParams.page ?? "1"
 
   const res = await hono.api.quzzies.mine.$get({
     query: {
