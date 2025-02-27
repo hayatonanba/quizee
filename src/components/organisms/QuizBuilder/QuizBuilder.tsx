@@ -7,13 +7,13 @@ import type { QuizFormData } from "@/store/useQuizStore";
 
 export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData> }) {
   const { control, watch, setValue, formState: { errors } } = Form;
-  const { fields, append, remove } = useFieldArray({ control, name: "options" });
-  const options = watch("options");
+  const { fields, append, remove } = useFieldArray({ control, name: "choices" });
+  const options = watch("choices");
 
   // ✅ 選択肢をチェックしたときに正解を更新
   const handleCheckboxChange = (localId: number) => {
     setValue(
-      "options",
+      "choices",
       options.map((option) => ({
         ...option,
         isCorrect: option.localId === localId, // localId を基準にする
@@ -58,29 +58,29 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
       />
 
       {/* ✅ 選択肢リスト */}
-      {fields.map((option, index) => (
+      {fields.map((choice, index) => (
         <Controller
-          key={option.localId} // localId を key にする
-          name={`options.${index}.text`}
+          key={choice.localId} // localId を key にする
+          name={`choices.${index}.text`}
           control={control}
           render={({ field }) => (
             <>
               <ChoiceInput
                 field={field}
                 placeholder={`${index + 1}つ目の選択肢`}
-                option={option}
-                handleCheckBoxChange={() => handleCheckboxChange(option.localId)} // localId を渡す
+                choice={choice}
+                handleCheckBoxChange={() => handleCheckboxChange(choice.localId)} // localId を渡す
                 handleRemoveOption={() => removeOption(index)}
                 isRemovable={fields.length > 2}
               />
-              {errors.options && <p className="text-[0.8rem] text-red-500">{errors.options?.[index]?.text?.message}</p>}
+              {errors.choices && <p className="text-[0.8rem] text-red-500">{errors.choices?.[index]?.text?.message}</p>}
             </>
           )}
         />
       ))}
 
       {/* ✅ バリデーションエラー */}
-      {errors.options && <p className="text-red-500">{errors.options.message}</p>}
+      {errors.choices && <p className="text-red-500">{errors.choices.message}</p>}
 
       {/* ✅ 選択肢追加ボタン */}
       {fields.length < 4 && (

@@ -19,9 +19,7 @@ export default function CreateQuizTemplate() {
 
   const onSubmit = async (data: QuizFormData) => {
 
-    console.log(data.options)
-
-    const sanitizedChoices = data.options.map(({ localId, id,  ...rest }) => rest);
+    const sanitizedChoices = data.choices.map(({ localId, ...rest }) => rest);
 
     try {
       const res = await hono.api.quzzies.$post({

@@ -32,3 +32,5 @@ export const UpdateChoiceSchema = z.object({
     example: false
   })
 })
+
+export type CreateChoice = z.infer<typeof CreateChoiceSchema>
