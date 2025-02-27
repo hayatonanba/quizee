@@ -18,6 +18,14 @@ export const getQuizByIdRoute = createRoute({
         }
       }
     },
+    403: {
+      description: "編集権限がありません。",
+      content: {
+        "application/json": {
+          schema: z.null()
+        }
+      }
+    },
     404: {
       description: "見つかりませんでした",
       content: {
