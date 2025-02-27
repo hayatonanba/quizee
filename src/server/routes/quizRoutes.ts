@@ -1,5 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { AnswerSchema, CreateQuizSchema, CurrentStreakSchema, MessageSchema, MyQuizzesSchema, QuerySchema, QuizIdSchema, QuizSchema, UpdateQuizSchema } from "../models/quizSchema";
+import { CreateQuizSchema, MyQuizzesSchema, QuerySchema, QuizIdSchema, QuizSchema, UpdateQuizSchema } from "../models/quizSchema";
+import { AnswerSchema, CurrentStreakSchema, MessageSchema } from "../models/othersSchema";
 
 export const getQuizByIdRoute = createRoute({
   path: "/{quizId}",

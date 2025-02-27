@@ -1,49 +1,6 @@
 import { z } from "@hono/zod-openapi";
-
-export const UserSchema = z.object({
-  id: z.string().openapi({
-    example: "aaaaaaa"
-  }),
-  name: z.string().nullable().openapi({
-    example: "y_ta"
-  }),
-  image: z.string().nullable().openapi({
-    example: "https://avatars.githubusercontent.com/u/129815120?v=4"
-  }),
-});
-
-export const ChoiseSchema = z.object({
-  id: z.number().optional().openapi({
-  example: 1
-  }),
-  text: z.string().min(1).openapi({
-    example: "クイズの選択肢"
-  }),
-  isCorrect: z.boolean().openapi({
-    example: false
-  })
-})
-
-export const CreateChoiceSchema = z.object({
-  text: z.string().min(1).openapi({
-    example: "クイズの選択肢"
-  }),
-  isCorrect: z.boolean().openapi({
-    example: false
-  })
-})
-
-export const AnswerSchema = z.object({
-  answer: z.string().openapi({
-    example: "答え"
-  })
-})
-
-export const MessageSchema = z.object({
-  message: z.string().openapi({
-    example: "正解"
-  })
-})
+import { UserSchema } from "./userSchema";
+import { ChoiseSchema, CreateChoiceSchema, UpdateChoiceSchema } from "./choiceSchema";
 
 export const QuizSchema = z.object({
   id: z.number().openapi({
@@ -78,34 +35,6 @@ export const QuizSchema = z.object({
   user: UserSchema,
 })
 
-export const QuizIdSchema = z.object({
-  quizId: z.string().openapi({ 
-    example: "1"
-  }),
-});
-
-export const QuerySchema = z.object({
-  page: z.string().openapi({
-    example: "1"
-  }),
-})
-
-export const CurrentStreakSchema = z.object({
-  currentStreak: z.number().openapi({
-    example: 1
-  })
-})
-
-export const MyQuizzesSchema = z.object({
-  quizzes: z.array(QuizSchema),
-  totalCount: z.number().openapi({
-    example: 1
-  }),
-  totalPages: z.number().openapi({
-    example: 1
-  })
-})
-
 export const CreateQuizSchema = z.object({
   question: z.string().min(1).max(30).openapi({
     example: "新しいクイズ"
@@ -131,7 +60,7 @@ export const UpdateQuizSchema = z.object({
   question: z.string().min(1).max(30).openapi({
     example: "問題文の更新"
   }),
-  choices: z.array(ChoiseSchema).min(2).max(4).openapi({
+  choices: z.array(UpdateChoiceSchema).min(2).max(4).openapi({
     example: [
       {
         "id": 1,
@@ -149,6 +78,29 @@ export const UpdateQuizSchema = z.object({
     example: false
   }),
 })
+
+export const QuizIdSchema = z.object({
+  quizId: z.string().openapi({ 
+    example: "1"
+  }),
+});
+
+export const QuerySchema = z.object({
+  page: z.string().openapi({
+    example: "1"
+  }),
+})
+
+export const MyQuizzesSchema = z.object({
+  quizzes: z.array(QuizSchema),
+  totalCount: z.number().openapi({
+    example: 1
+  }),
+  totalPages: z.number().openapi({
+    example: 1
+  })
+})
+
 
 export type QuizId = z.infer<typeof QuizIdSchema>;
 export type CreateQuiz = z.infer<typeof CreateQuizSchema>;
