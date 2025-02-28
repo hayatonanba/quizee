@@ -11,3 +11,5 @@ export const UserSchema = z.object({
     example: "https://avatars.githubusercontent.com/u/129815120?v=4"
   }),
 });
+
+export type User = z.infer<typeof UserSchema>

@@ -34,3 +34,4 @@ export const UpdateChoiceSchema = z.object({
 })
 
 export type CreateChoice = z.infer<typeof CreateChoiceSchema>
+export type Choice = z.infer<typeof ChoiseSchema>

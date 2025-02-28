@@ -2,6 +2,7 @@
 
 import { ChoiceButton } from "@/components/molecules/ChoiceButton";
 import { hono } from "@/lib/hono/client";
+import type { Choice } from "@/server/models/choiceSchema";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
@@ -9,17 +10,11 @@ import toast, { Toaster } from 'react-hot-toast';
 type Props = {
   question: string;
   author: string;
-  choiceList: ChoiceType[];
+  choices: Choice[];
   id: number;
 };
 
-type ChoiceType = {
-  id: number,
-  text: string,
-  isCorrect: boolean
-}
-
-export default function QuizField({ question, author, choiceList, id }: Props) {
+export default function QuizField({ question, author, choices, id }: Props) {
 
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -57,7 +52,7 @@ export default function QuizField({ question, author, choiceList, id }: Props) {
         作問者 : {author}さん
       </p>
       <div className="space-y-3">
-        {choiceList.map((choice, i) => (
+        {choices.map((choice, i) => (
           <ChoiceButton
             text={choice.text}
             onClickFn={() => handleSubmit(choice.text, id)}

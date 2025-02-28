@@ -13,6 +13,7 @@ export const Default: StoryObj<T> = {
     return (
       <div className="w-1/3">
         <ChoiceButton
+          isLoading={true}
           text="モホロビチッチ不連続面"
           onClickFn={() => alert("正解")}
         />
