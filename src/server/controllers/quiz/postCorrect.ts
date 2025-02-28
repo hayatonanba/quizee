@@ -7,46 +7,43 @@ export const createCorrectHandler: RouteHandler<typeof createCorrectRoute> = asy
   const { answer } = await c.req.valid("json")
   const { quizId } = c.req.param()
   const session = await auth()
-  
-    if (!session?.user?.id) {
-      throw Error("認証してください。")
-    }
 
-  const correct = await prisma.quiz.findUnique({
-    where: { id: Number(quizId) },
-    include: {
-      choices: {
-        where: { isCorrect: true },
-      },
-    },
-  })
-
-  let ms = {message: ""}
-
-  if (answer === correct?.choices[0].text) {
-    ms = {message: "correct"}
-    await prisma.user.update({
-      where: {id: session.user.id},
-      data: {
-        currentStreak: {increment: 1}
-      }
-    })
-  } else {
-    ms = {message: "uncorrect"}
-    await prisma.user.update({
-      where: {id: session.user.id},
-      data: {
-        currentStreak: 0
-      }
-    })
+  if (!session?.user?.id) {
+    throw Error("認証してください。")
   }
 
-  await prisma.user.update({
-    where: { id: session.user.id },
-    data: {
-      currentQuizId: null
-    }
-  })
+  const userId = session.user.id;
 
-  return c.json(ms, 201)
+  return await prisma.$transaction(async (tx) => {
+
+    const correct = await tx.quiz.findUnique({
+      where: { id: Number(quizId) },
+      include: {
+        choices: {
+          where: { isCorrect: true },
+        },
+      },
+    })
+
+    let message = "uncorrect";
+
+    /*もし途中でユーザーにより問題が削除された場合は、正解の答えがnullとなり、
+    不正解判定になるようになっています。*/
+    const isCorrect = answer === correct?.choices[0].text;
+
+    await tx.user.update({
+      where: { id: userId },
+      data: {
+        currentStreak: isCorrect ? { increment: 0 } : 0,
+        currentQuizId: null,
+      }
+    })
+
+    if (isCorrect) {
+      message = "correct";
+    }
+
+    return c.json({ message }, 201);
+
+  })
 }

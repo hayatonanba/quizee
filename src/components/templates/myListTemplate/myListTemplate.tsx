@@ -21,11 +21,17 @@ export default function MyListTemplate({
   const router = useRouter();
 
   const handleDelete = async (quizId: string) => {
-    await hono.api.quzzies[":quizId"].$delete({
-      param: { quizId },
-    });
+    try{
+      const res = await hono.api.quzzies[":quizId"].$delete({
+        param: { quizId },
+      });
 
-    router.refresh();
+      if(res.ok){
+        router.refresh();
+      }
+    }catch(err){
+      console.error("削除に失敗しました。", err)
+    }
   };
 
   const handleNavigation = (page: number) => {

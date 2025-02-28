@@ -17,7 +17,7 @@ export const ThreeOrMoreChoices: StoryObj<T> = {
     return (
       <div className="w-1/3">
         <ChoiceInput
-          option={{ isCorrect: isChecked, text: "", id: 11 }}
+          choice={{ isCorrect: isChecked, text: "" }}
           isRemovable={true}
           handleCheckBoxChange={() => setIsChecked(!isChecked)}
           handleRemoveOption={() => alert("Delete!!")}
@@ -35,7 +35,7 @@ export const TwoOrFewerChoices: StoryObj<T> = {
     return (
       <div className="w-1/3">
         <ChoiceInput
-          option={{ isCorrect: isChecked, text: "", id: 11 }}
+          choice={{ isCorrect: isChecked, text: "" }}
           isRemovable={false}
           handleCheckBoxChange={() => setIsChecked(!isChecked)}
           handleRemoveOption={() => alert("Delete!!")}

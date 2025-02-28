@@ -6,20 +6,20 @@ import type { RouteHandler } from "@hono/zod-openapi";
 export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute> = async (c) => {
   const { quizId } = c.req.param()
   const session = await auth()
-    
-    if (!session?.user?.id) {
-      throw Error("認証してください。")
-    }
+
+  if (!session?.user?.id) {
+    throw Error("認証してください。")
+  }
 
   const existingQuiz = await prisma.quiz.findUnique({ where: { id: Number(quizId) } });
-  
-    if (!existingQuiz) {
-      return c.json(null, 404);
-    }
 
-    if (session?.user?.id !== existingQuiz.userId) {
-      return c.json(null, 404);
-    }
+  if (!existingQuiz) {
+    return c.json(null, 404);
+  }
+
+  if (session?.user?.id !== existingQuiz.userId) {
+    return c.json(null, 403);
+  }
 
   const quiz = await prisma.quiz.findUnique({
     where: { id: Number(quizId) },

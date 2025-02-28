@@ -1,7 +1,5 @@
 import { auth } from "@/auth";
-import HomeButtons from "@/components/molecules/HomeButtons/HomeButtons";
-import { QuizField } from "@/components/organisms/QuizField";
-import { StreakBubbleWithIcon } from "@/components/organisms/StreakBubbleWithIcon";
+import HomePageTemplate from "@/components/templates/homePageTemplate/homePageTemplate";
 import { hono } from "@/lib/hono/client";
 import { headers } from "next/headers";
 
@@ -28,18 +26,12 @@ export default async function Page() {
   const { question, choices, user, id } = randomQuiz
 
   return (
-    <div className="mx-auto flex h-screen max-w-[700px] items-center justify-center px-3">
-      <div className="mb-[120px] flex-1">
-        <div className="mb-[50px] flex justify-center">
-          <StreakBubbleWithIcon iconUrl={session.user?.image ?? ""} streakCount={0} color="black" />
-        </div>
-        <div className="mb-[50px]">
-          <QuizField id={id} question={question} choiceList={choices} author={user.name as string} />
-        </div>
-        <div className="flex justify-center">
-          <HomeButtons />
-        </div>
-      </div>
-    </div>
+    <HomePageTemplate
+      question={question}
+      choices={choices}
+      author={user}
+      iconUrl={session?.user?.image ?? ""}
+      id={id}
+    />
   );
 }

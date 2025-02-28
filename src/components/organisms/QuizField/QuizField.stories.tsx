@@ -10,7 +10,7 @@ export default {
 
 export const Default: StoryObj<T> = {
   render: () => {
-    const choiceList = [
+    const choices = [
       { id: 1, text: "33550336", isCorrect: true },
       { id: 2, text: "33550337", isCorrect: false },
       { id: 3, text: "33551336", isCorrect: false },
@@ -19,7 +19,8 @@ export const Default: StoryObj<T> = {
 
     return (
       <QuizField
-        choiceList={choiceList}
+        choices={choices}
+        id={10}
         question="5番目の完全数は？"
         author="y_ta"
       />

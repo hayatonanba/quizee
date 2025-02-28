@@ -19,7 +19,7 @@ export default function EditQuizTemplate({ id, question, choices, isPublic }: { 
   const router = useRouter()
   const Form = useQuizStore().editForm({
     question: question,
-    options: choices
+    choices: choices
   })
   const { handleSubmit } = Form;
   const [ispublished, setIsPublished] = useState(isPublic)
@@ -30,7 +30,7 @@ export default function EditQuizTemplate({ id, question, choices, isPublic }: { 
 
   const onSubmit = async (data: QuizFormData) => {
 
-    const sanitizedChoices = data.options.map(({ localId, ...rest }) => rest);
+    const sanitizedChoices = data.choices.map(({ localId, ...rest }) => rest);
 
     try {
       const res = await hono.api.quzzies[":quizId"].$put({

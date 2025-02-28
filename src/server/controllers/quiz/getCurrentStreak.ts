@@ -5,21 +5,21 @@ import type { RouteHandler } from "@hono/zod-openapi";
 
 export const getCurrentStreakHandler: RouteHandler<typeof getCurrentStreakRoute> = async (c) => {
   const session = await auth()
-  
-    if (!session?.user?.id) {
-      throw Error("認証してください。")
-    }
 
-  const currentStreakNumber = await prisma.user.findUnique({
+  if (!session?.user?.id) {
+    throw Error("認証してください。")
+  }
+
+  const currentStreak  = await prisma.user.findUnique({
     where: { id: session.user.id },
     select: {
       currentStreak: true
     }
   })
 
-  if (!currentStreakNumber) {
-    return c.json({ currentStreak: 0 })
+  if (!currentStreak) {
+    throw Error("ユーザーがいません。")
   }
 
-  return c.json(currentStreakNumber, 200);
+  return c.json(currentStreak, 200);
 }

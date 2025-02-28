@@ -1,16 +1,16 @@
 import { quizSchema } from "@/lib/schema";
+import type { CreateChoice } from "@/server/models/choiceSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type UseFormReturn } from "react-hook-form";
 import { create } from "zustand";
 
 export type QuizFormData = {
-  question: string;
-  options: {
-    localId: number;
-    id?: number;
-    text: string;
-    isCorrect: boolean;
-  }[];
+  question: string,
+  choices: (CreateChoice & { localId: number })[]
+}
+
+export type EditQuizFormData = {
+  question: string,
 }
 
 type QuizStore = {
@@ -18,13 +18,13 @@ type QuizStore = {
   editForm: (initialData: QuizFormData) => UseFormReturn<QuizFormData>;
 }
 
-export const useQuizStore = create<QuizStore>((set, get) => ({
+export const useQuizStore = create<QuizStore>(() => ({
   newForm: () =>
     useForm<QuizFormData>({
       resolver: zodResolver(quizSchema),
       defaultValues: {
         question: "",
-        options: [
+        choices: [
           { localId: Date.now(), text: "", isCorrect: true },
           { localId: Date.now() + 1, text: "", isCorrect: false },
         ],
@@ -35,7 +35,7 @@ export const useQuizStore = create<QuizStore>((set, get) => ({
       resolver: zodResolver(quizSchema),
       defaultValues: initalData ?? {
         question: "",
-        options: [],
+        choices: [],
       },
     }),
 }));
