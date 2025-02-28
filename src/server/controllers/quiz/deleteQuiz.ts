@@ -23,5 +23,5 @@ export const deleteQuizHandler: RouteHandler<typeof deleteQuizRoute> = async (c)
 
   await prisma.quiz.delete({ where: { id: Number(quizId) } })
 
-  return c.json({ message: ("クイズを削除しました") }, 200)
+  return c.json(204)
 }

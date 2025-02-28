@@ -13,7 +13,7 @@ export const getQuizByIdRoute = createRoute({
     200: {
       description: "成功",
       content: {
-        "application/json":{
+        "application/json": {
           schema: QuizSchema
         }
       }
@@ -69,10 +69,10 @@ export const getMyQuizzesRoute = createRoute({
     query: QuerySchema
   },
   responses: {
-    200:{
-      description:"成功",
+    200: {
+      description: "成功",
       content: {
-        "application/json":{
+        "application/json": {
           schema: MyQuizzesSchema
         }
       }
@@ -102,8 +102,8 @@ export const createQuizRoute = createRoute({
   description: "問題作成",
   request: {
     body: {
-      content:{
-        "application/json":{
+      content: {
+        "application/json": {
           schema: CreateQuizSchema
         }
       }
@@ -113,7 +113,7 @@ export const createQuizRoute = createRoute({
     201: {
       description: "作成成功",
       content: {
-        "application/json" :{
+        "application/json": {
           schema: QuizSchema
         }
       }
@@ -177,7 +177,7 @@ export const updateQuizRoute = createRoute({
       }
     }
   }
-  
+
 
 })
 
@@ -186,16 +186,16 @@ export const deleteQuizRoute = createRoute({
   method: "delete",
   description: "クイズを削除",
   request: {
-   params: QuizIdSchema,
+    params: QuizIdSchema,
   },
   responses: {
-    200: { description: "削除成功" },
-    404: { 
+    204: { description: "削除成功" },
+    404: {
       description: "クイズが見つかりません", content: {
         "application/json": {
           schema: z.null()
         }
-      } 
+      }
     }
   }
 })
