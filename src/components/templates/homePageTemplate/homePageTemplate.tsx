@@ -9,15 +9,16 @@ type Props = {
   question: string,
   id: number;
   choices: Choice[],
-  iconUrl: string
+  iconUrl: string,
+  currentStreak: number
 }
 
-export default function HomePageTemplate({ author, question, id, choices, iconUrl }: Props) {
+export default function HomePageTemplate({ author, question, id, choices, iconUrl, currentStreak }: Props) {
   return (
     <div className="mx-auto flex h-screen max-w-[700px] items-center justify-center px-3">
       <div className="mb-[120px] flex-1">
         <div className="mb-[50px] flex justify-center">
-          <StreakBubbleWithIcon iconUrl={iconUrl} streakCount={0} color="black" />
+          <StreakBubbleWithIcon iconUrl={iconUrl} streakCount={currentStreak} color="black" />
         </div>
         <div className="mb-[50px]">
           <QuizField id={id} question={question} choices={choices} author={author.name as string} />

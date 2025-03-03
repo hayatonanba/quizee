@@ -21,6 +21,8 @@ export default function QuizField({ question, author, choices, id }: Props) {
 
   const handleSubmit = async (answer: string, id: number) => {
 
+    if (isLoading) return;
+
     setIsLoading(true)
 
     const res = await hono.api.quzzies[":quizId"].answer.$post({
@@ -32,7 +34,6 @@ export default function QuizField({ question, author, choices, id }: Props) {
       }
     })
     const result = await res.json()
-    setIsLoading(false)
   
     if (result.message === "correct") {
       toast.success("正解")
@@ -40,8 +41,10 @@ export default function QuizField({ question, author, choices, id }: Props) {
       toast.error("不正解")
     }
 
+    //再フェッチまでに前の問題に回答できてしまう問題
     router.push("/home")
     router.refresh()
+    setIsLoading(false)
   }
 
   return (
