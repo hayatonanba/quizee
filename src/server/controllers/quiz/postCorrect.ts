@@ -34,7 +34,7 @@ export const createCorrectHandler: RouteHandler<typeof createCorrectRoute> = asy
     await tx.user.update({
       where: { id: userId },
       data: {
-        currentStreak: isCorrect ? { increment: 0 } : 0,
+        currentStreak: isCorrect ? { increment: 1 } : 0,
         currentQuizId: null,
       }
     })

@@ -10,20 +10,20 @@ export default async function Page() {
     return <div>認証してください。</div>
   }
 
-  const res = await hono.api.quzzies.random.$get({}, {
-    init: {
-      cache: "no-store",
-      headers: headers()
-    }
-  })
+  const [quizRes, streakRes] = await Promise.all([
+    hono.api.quzzies.random.$get({}, { init: { cache: "no-store", headers: headers() } }),
+    hono.api.quzzies.currentStreak.$get({}, { init: { cache: "no-store", headers: headers() } })
+  ]);
 
-  const randomQuiz = await res.json()
+  const randomQuiz = await quizRes.json();
+  const streakData = await streakRes.json();
 
   if (!randomQuiz) {
     return <div>クイズがありません。</div>
   }
 
   const { question, choices, user, id } = randomQuiz
+  const { currentStreak }  = streakData
 
   return (
     <HomePageTemplate
@@ -31,6 +31,7 @@ export default async function Page() {
       choices={choices}
       author={user}
       iconUrl={session?.user?.image ?? ""}
+      currentStreak={currentStreak}
       id={id}
     />
   );
