@@ -1,16 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -20,39 +14,37 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
+  currentStreak Int             @default(0)
+  currentQuizId Int?
+  prevQuizId Int?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  isAnswering   Boolean         @default(false)
   accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
   Authenticator Authenticator[]
-
-  currentStreak Int @default(0)
-  currentQuizId Int? 
-  quizzes Quiz[]
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  quizzes       Quiz[]
+  sessions      Session[]
 }
 
 model Quiz {
-  id Int @id @default(autoincrement())
-  userId String
-  question String
-  isPublic Boolean @default(false)
+  id        Int      @id @default(autoincrement())
+  userId    String
+  question  String
+  isPublic  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  choices Choice[]
+  choices   Choice[]
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Choice {
-  id Int @id @default(autoincrement())
-  quizId Int
-  text String
+  id        Int     @id @default(autoincrement())
+  quizId    Int
+  text      String
   isCorrect Boolean
-
-  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  quiz      Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -65,33 +57,30 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([provider, providerAccountId])
 }
- 
+
 model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@id([identifier, token])
 }
- 
+
 model Authenticator {
   credentialID         String  @unique
   userId               String
@@ -101,9 +90,7 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([userId, credentialID])
 }
-

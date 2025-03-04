@@ -4,7 +4,7 @@ import { ChoiceButton } from "@/components/molecules/ChoiceButton";
 import { hono } from "@/lib/hono/client";
 import type { Choice } from "@/server/models/choiceSchema";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 
 type Props = {
@@ -19,9 +19,13 @@ export default function QuizField({ question, author, choices, id }: Props) {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = async (answer: string, id: number) => {
 
-    if (isLoading) return;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    setIsLoading(false);
+  }, [id]);
+
+  const handleSubmit = async (answer: string, id: number) => {
 
     setIsLoading(true)
 
@@ -34,17 +38,17 @@ export default function QuizField({ question, author, choices, id }: Props) {
       }
     })
     const result = await res.json()
-  
+
+    toast.dismiss();
+
     if (result.message === "correct") {
       toast.success("正解")
     } else {
       toast.error("不正解")
     }
 
-    //再フェッチまでに前の問題に回答できてしまう問題
-    router.push("/home")
-    router.refresh()
-    setIsLoading(false)
+    router.push("/home");
+    router.refresh();
   }
 
   return (
