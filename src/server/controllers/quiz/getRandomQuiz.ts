@@ -20,7 +20,6 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute> = asy
   }
 
   const { currentQuizId } = user
-  console.log(currentQuizId)
 
   // currentQuizId が存在する場合は、そのクイズを返す
   if (currentQuizId) {
