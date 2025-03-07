@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { MessageSchema } from "../models/othersSchema";
 import { UsernameSchema } from "../models/userSchema";
 export const updateUsernameRoute = createRoute({
-    path: "/users/{id}",
+    path: "/{id}",
     method: "post",
     description: "ユーザー名を更新",
     request:{
@@ -15,13 +15,8 @@ export const updateUsernameRoute = createRoute({
         }
     },
     responses:{
-        201: {
+        200:{
             description: "成功",
-            content: {
-                "application/json": {
-                    schema: MessageSchema
-                }
-            }
         }
     }
 }) 

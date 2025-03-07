@@ -5,7 +5,7 @@ import type { updateUsernameRoute } from "@/server/routes/userRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
 export const updateUsernameHandler: RouteHandler<typeof updateUsernameRoute> = async (c) => {
-    const { name } = await c.req.json<Username>()
+    const { name } = c.req.valid("json") 
     const { id } = c.req.param()
     const session = await auth()
     
@@ -22,5 +22,5 @@ export const updateUsernameHandler: RouteHandler<typeof updateUsernameRoute> = a
         data: { name },
     })
     
-    return c.json({ message: "ユーザー名を更新しました" }, 201)
+    return c.json(200);
 }
