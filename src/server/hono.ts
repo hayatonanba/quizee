@@ -39,7 +39,7 @@ const userApp = new OpenAPIHono().openapi(
 );
 
 const mainApp = new OpenAPIHono()
-  .route("/quizzies", quizApp)
+  .route("/quzzies", quizApp)
   .route("/users", userApp);
 
 const route = app.route("/", mainApp);
