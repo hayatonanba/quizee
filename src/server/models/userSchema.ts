@@ -12,4 +12,11 @@ export const UserSchema = z.object({
   }),
 });
 
+export const UsernameSchema = z.object({
+  name: z.string().openapi({
+    example: "potekichi"
+  }),
+});
+
 export type User = z.infer<typeof UserSchema>
+export type Username = z.infer<typeof UsernameSchema>
