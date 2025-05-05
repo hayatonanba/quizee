@@ -13,13 +13,10 @@ export default {
 export const Default: StoryObj<T> = {
   render: () => {
     return (
-      <div>
-        <SettingButton
-          img = {<FontAwesomeIcon icon={faGear} />}
-          text = "ユーザー設定"
-          link = "/setting"
-         />
-      </div>
+      <SettingButton link = "/setting">
+        <FontAwesomeIcon icon={faGear} />
+        <span>ユーザー設定</span>
+      </SettingButton>
     )
   }
 };
