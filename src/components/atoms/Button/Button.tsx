@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const ButtonStyle = tv({
-  base: "border border-black rounded-full text-[1rem] transition-all duration-300 hover:-translate-y-[2px]",
+  base: "border border-black rounded-full text-[1rem] transition-all duration-500 hover:scale-95 hover:bg-black hover:text-white transition ease-in-out duration-300 cursor-pointer",
   variants: {
     size: {
       sm: "py-1 px-6",
