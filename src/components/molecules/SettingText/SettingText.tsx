@@ -4,12 +4,12 @@ import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   inputName: string;
-  placeholder: string
+  placeholder: string;
 }
 
 export default function SettingText({inputName, placeholder}: Props) {
     return (
-      <div className='w-[500px]'>
+      <div>
         <div className='h-[80px] bg-gray-100 p-3'>
           <h1 className='font-bold'>{inputName}</h1>
           <label className="flex items-center border-black border-b py-1">

@@ -9,8 +9,14 @@ export default {
 } satisfies Meta<T>;
 
 export const Default: StoryObj<T> = {
-  args: {
-    inputName: "表示名",
-    placeholder: "user_name"
+  render: () => {
+    return(
+    <div className='w-[500px]'>
+      <SettingText 
+        inputName='表示名'
+        placeholder='nababa'
+      />
+    </div>
+    )
   }
 };
