@@ -1,10 +1,14 @@
 "use client";
+import { Button } from "@/components/atoms/Button";
 import PagenationButton from "@/components/molecules/Pagination/Pagination";
 import MyListHeader from "@/components/organisms/MyListHeader/MyListHeader";
 import { QuizCard } from "@/components/organisms/QuizCard";
 import { hono } from "@/lib/hono/client";
 import type { Quiz } from "@/server/models/quizSchema";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -21,15 +25,15 @@ export default function MyListTemplate({
   const router = useRouter();
 
   const handleDelete = async (quizId: string) => {
-    try{
+    try {
       const res = await hono.api.quzzies[":quizId"].$delete({
         param: { quizId },
       });
 
-      if(res.ok){
+      if (res.ok) {
         router.refresh();
       }
-    }catch(err){
+    } catch (err) {
       console.error("削除に失敗しました。", err)
     }
   };
@@ -44,6 +48,17 @@ export default function MyListTemplate({
         <MyListHeader link="/home" />
       </div>
       <div className="relative mx-auto max-w-[700px] space-y-4 px-3">
+        {quizzes.length === 0 && (
+          <div className="text-center">
+            <p className="mb-3 font-semibold text-gray-400">さあ、新しいクイズを作ろう！</p>
+            <Button size="sm" type="button">
+              <Link className="flex items-center gap-2" href="/quiz/new">
+                <FontAwesomeIcon icon={faPencil} className="size-[20px]" />
+                作問する
+              </Link>
+            </Button>
+          </div>
+        )}
         {quizzes.map((quiz) => {
           return (
             <div key={quiz.id}>
