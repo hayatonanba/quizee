@@ -17,17 +17,20 @@ type Props = {
 export default function QuizField({ question, author, choices, id }: Props) {
 
   const [isLoading, setIsLoading] = useState(false)
+  const [selected, setSelected] = useState<string | null>(null);
   const router = useRouter()
 
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setIsLoading(false);
+    setSelected(null);
   }, [id]);
 
   const handleSubmit = async (answer: string, id: number) => {
 
     setIsLoading(true)
+    setSelected(answer);
 
     const res = await hono.api.quzzies[":quizId"].answer.$post({
       param: {
@@ -42,9 +45,9 @@ export default function QuizField({ question, author, choices, id }: Props) {
     toast.dismiss();
 
     if (result.message === "correct") {
-      toast.success("正解")
+      toast.success("正解", {duration: 800})
     } else {
-      toast.error("不正解")
+      toast.error("不正解", {duration: 800})
     }
 
     router.push("/home");
@@ -64,6 +67,7 @@ export default function QuizField({ question, author, choices, id }: Props) {
             text={choice.text}
             onClickFn={() => handleSubmit(choice.text, id)}
             isLoading={isLoading}
+            isSelected={selected === choice.text} 
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             key={i}
           />
