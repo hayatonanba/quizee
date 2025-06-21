@@ -17,6 +17,7 @@ export const getMyQuizzesHandler: RouteHandler<typeof getMyQuizzesRoute, WithAut
 
   const quizzes = await prisma.quiz.findMany({
     where: { userId: c.var.userId },
+    orderBy: { createdAt: "desc" },
     skip,
     take: pageSize,
     include: {
