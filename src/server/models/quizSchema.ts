@@ -26,11 +26,8 @@ export const QuizSchema = z.object({
   isPublic: z.boolean().openapi({
     example: false
   }),
-  createdAt: z.string().datetime().openapi({
+  updatedAt: z.string().datetime().openapi({
     example: "2024-10-30T12:00:00Z"
-  }),
-  userId: z.string().openapi({
-    example: "cm6qkipl10000o4z60q7gytcd"
   }),
   user: UserSchema,
 })

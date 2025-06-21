@@ -69,7 +69,7 @@ export default function MyListTemplate({
                 question={quiz.question}
                 choices={quiz.choices}
                 isPublic={quiz.isPublic}
-                updatedAt={format(quiz.createdAt, "yyyy/MM/dd")}
+                updatedAt={format(quiz.updatedAt, "yyyy/MM/dd")}
               />
             </div>
           );

@@ -26,13 +26,16 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
   if (currentQuizId) {
     const quiz = await prisma.quiz.findUnique({
       where: { id: currentQuizId },
-      include: {
+      select: {
+        id: true,
+        question: true,
         choices: true,
+        updatedAt: true,
+        isPublic: true,
         user: {
           select: {
-            id: true,
             name: true,
-            image: true,
+            image: true
           }
         }
       }
@@ -58,13 +61,16 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
     where: whereClause,
     take: 1,
     skip: skip,
-    include: {
+    select: {
+      id: true,
+      question: true,
       choices: true,
+      updatedAt: true,
+      isPublic: true,
       user: {
         select: {
-          id: true,
           name: true,
-          image: true,
+          image: true
         }
       }
     }

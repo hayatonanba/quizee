@@ -24,13 +24,16 @@ export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute, WithAuthe
 
   const quiz = await prisma.quiz.findUnique({
     where: { id: Number(quizId) },
-    include: {
+    select: {
+      id: true,
+      question: true,
       choices: true,
+      updatedAt: true,
+      isPublic: true,
       user: {
         select: {
-          id: true,
           name: true,
-          image: true,
+          image: true
         }
       }
     }

@@ -60,12 +60,19 @@ export const updateQuizHandler: RouteHandler<typeof updateQuizRoute, WithAuthent
         },
         isPublic,
       },
-      include: {
+      select: {
+        id: true,
+        question: true,
         choices: true,
+        updatedAt: true,
+        isPublic: true,
         user: {
-          select: { id: true, name: true, image: true },
-        },
-      },
+          select: {
+            name: true,
+            image: true
+          }
+        }
+      }
     }),
   ]);
 
