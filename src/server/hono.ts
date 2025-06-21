@@ -21,7 +21,6 @@ import { createCorrectHandler } from "./controllers/quiz/postCorrect";
 import { authMiddleware, type WithAuthenticatedRequest } from "./middleware/authMiddleware";
 import type { Env } from "hono"
 import { basicAuth } from "hono/basic-auth";
-import { cors } from "hono/cors"
 
 
 export const app = new OpenAPIHono().basePath("/api");
@@ -40,7 +39,6 @@ const mainApp = new OpenAPIHono()
   .route("/quzzies", quizApp)
 
 app.use(authMiddleware)
-app.use(cors())
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const route = app.route("/", mainApp)
