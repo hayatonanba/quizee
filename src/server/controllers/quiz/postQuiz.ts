@@ -1,20 +1,20 @@
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma/client";
+import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { createQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
-export const createQuizHandler: RouteHandler<typeof createQuizRoute> = async (c) => {
+export const createQuizHandler: RouteHandler<typeof createQuizRoute, WithAuthenticatedRequest> = async (c) => {
   const { question, choices, isPublic } = c.req.valid("json");
 
-  const session = await auth()
+  // const session = await auth()
 
-  if (!session?.user?.id) {
-    throw Error("認証してください。")
-  }
+  // if (!session?.user?.id) {
+  //   throw Error("認証してください。")
+  // }
 
   const quiz = await prisma.quiz.create({
     data:{
-      userId: session.user.id,
+      userId: c.var.userId,
       question,
       isPublic,
       choices: {

@@ -1,15 +1,15 @@
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma/client";
+import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { getQuizByIdRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
-export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute> = async (c) => {
+export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute, WithAuthenticatedRequest> = async (c) => {
   const { quizId } = c.req.param()
-  const session = await auth()
+  // const session = await auth()
 
-  if (!session?.user?.id) {
-    throw Error("認証してください。")
-  }
+  // if (!session?.user?.id) {
+  //   throw Error("認証してください。")
+  // }
 
   const existingQuiz = await prisma.quiz.findUnique({ where: { id: Number(quizId) } });
 
@@ -17,7 +17,7 @@ export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute> = async (
     return c.json(null, 404);
   }
 
-  if (session.user.id !== existingQuiz.userId) {
+  if (c.var.userId !== existingQuiz.userId) {
     return c.json(null, 403);
   }
 
