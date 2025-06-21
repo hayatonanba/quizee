@@ -17,7 +17,7 @@ export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute> = async (
     return c.json(null, 404);
   }
 
-  if (session?.user?.id !== existingQuiz.userId) {
+  if (session.user.id !== existingQuiz.userId) {
     return c.json(null, 403);
   }
 

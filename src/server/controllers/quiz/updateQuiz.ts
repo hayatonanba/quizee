@@ -1,11 +1,10 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma/client";
-import type { UpdateQuiz } from "@/server/models/quizSchema";
 import type { updateQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
 export const updateQuizHandler: RouteHandler<typeof updateQuizRoute> = async (c) => {
-  const { question, choices, isPublic } = await c.req.json<UpdateQuiz>()
+  const { question, choices, isPublic } = c.req.valid("json")
   const { quizId } = c.req.param()
   const session = await auth()
 
@@ -49,7 +48,7 @@ export const updateQuizHandler: RouteHandler<typeof updateQuizRoute> = async (c)
             .map(choice => ({
               where: { id: choice.id },
               update: { text: choice.text, isCorrect: choice.isCorrect },
-              create: { text: choice.text, isCorrect: choice.isCorrect },
+              create: { text: choice.text, isCorrect: choice.isCorrect }, //万が一の処理
             })),
           create: choices
             .filter(choice => !choice.id) // id がないものは新規作成

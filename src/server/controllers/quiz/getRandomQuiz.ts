@@ -4,9 +4,9 @@ import type { getRandomQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
 export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute> = async (c) => {
- 
+
   const session = await auth();
-  
+
   if (!session?.user?.id) {
     throw Error("認証してください。");
   }
@@ -22,6 +22,7 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute> = asy
   const { currentQuizId } = user
 
   // currentQuizId が存在する場合は、そのクイズを返す
+  //新しい問題が欲しい(currentQuizIdがnullの時はこの処理を飛ばす)
   if (currentQuizId) {
     const quiz = await prisma.quiz.findUnique({
       where: { id: currentQuizId },
@@ -41,13 +42,12 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute> = asy
     }
   }
 
-  // 直前の問題(prevQuizId)と被らないようにする条件を用意
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const whereClause: any = { isPublic: true };
-
-  if (user.prevQuizId) {
-    whereClause.id = { not: user.prevQuizId };
-  }
+  // 公開されてて、直前の問題(prevQuizId)と被らないようにする条件を用意
+  const whereClause = {
+    isPublic: true,
+    // prevQuizId が truthy なときだけ id を除外条件に追加
+    ...(user.prevQuizId ? { id: { not: user.prevQuizId } } : {}),
+  };
 
   // 条件にあったクイズ件数を取得
   const count = await prisma.quiz.count({ where: whereClause });
@@ -70,7 +70,7 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute> = asy
     }
   });
 
-  const newQuiz = quizzes[0];
+  const newQuiz = quizzes[0]
 
   await prisma.user.update({
     where: { id: session.user.id },
