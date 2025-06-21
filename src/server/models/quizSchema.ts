@@ -39,7 +39,20 @@ export const CreateQuizSchema = z.object({
   question: z.string().min(1).max(30).openapi({
     example: "新しいクイズ"
   }),
-  choices: z.array(CreateChoiceSchema).min(2).max(4).openapi({
+  choices: z.array(CreateChoiceSchema).min(2).max(4)
+  .refine((arr) => arr.filter(c => c.isCorrect).length === 1, {
+    message: "選択肢のうち正解は1つだけにしてください",
+    path: ["choices"],
+  })
+  // テキストの重複禁止
+  .refine((arr) => {
+    const texts = arr.map(c => c.text);
+    return new Set(texts).size === texts.length;
+  }, {
+    message: "選択肢のテキストはすべて異なるものにしてください",
+    path: ["choices"],
+  })
+  .openapi({
     example: [
       {
         "text": "aaaaaaaa",
@@ -60,7 +73,20 @@ export const UpdateQuizSchema = z.object({
   question: z.string().min(1).max(30).openapi({
     example: "問題文の更新"
   }),
-  choices: z.array(UpdateChoiceSchema).min(2).max(4).openapi({
+  choices: z.array(UpdateChoiceSchema).min(2).max(4)
+  .refine((arr) => arr.filter(c => c.isCorrect).length === 1, {
+    message: "選択肢のうち正解は1つだけにしてください",
+    path: ["choices"],
+  })
+  // テキストの重複禁止
+  .refine((arr) => {
+    const texts = arr.map(c => c.text);
+    return new Set(texts).size === texts.length;
+  }, {
+    message: "選択肢のテキストはすべて異なるものにしてください",
+    path: ["choices"],
+  })
+  .openapi({
     example: [
       {
         "id": 1,
