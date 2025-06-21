@@ -4,7 +4,7 @@ import type { createCorrectRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
 export const createCorrectHandler: RouteHandler<typeof createCorrectRoute> = async (c) => {
-  const { answer } = await c.req.valid("json")
+  const { answer } = c.req.valid("json")
   const { quizId } = c.req.param()
   const session = await auth()
 
@@ -16,6 +16,7 @@ export const createCorrectHandler: RouteHandler<typeof createCorrectRoute> = asy
 
   return await prisma.$transaction(async (tx) => {
     // アトミックに isAnswering フラグを true に更新（false の場合のみ更新）
+    //更新が完了すると、resultの数が1増えます。
     const result = await tx.user.updateMany({
       where: { id: userId, isAnswering: false },
       data: { isAnswering: true },
@@ -36,6 +37,7 @@ export const createCorrectHandler: RouteHandler<typeof createCorrectRoute> = asy
         },
       });
     
+      //nullの可能性は0なのでバリデーションが必要
       const isCorrect = answer === correct?.choices[0].text;
     
       await tx.user.update({

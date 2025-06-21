@@ -1,11 +1,10 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma/client";
-import type { CreateQuiz } from "@/server/models/quizSchema";
 import type { createQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
 export const createQuizHandler: RouteHandler<typeof createQuizRoute> = async (c) => {
-  const { question, choices, isPublic } = await c.req.json<CreateQuiz>();
+  const { question, choices, isPublic } = c.req.valid("json");
 
   const session = await auth()
 
