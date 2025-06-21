@@ -1,6 +1,6 @@
 import MyListTemplate from "@/components/templates/myListTemplate/myListTemplate";
 import { hono } from "@/lib/hono/client";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 
 type SearchParams = { page: string }
 
@@ -8,13 +8,15 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
 
   const page = searchParams.page ?? "1"
 
+  const cookieHeader = cookies().toString();
+
   const res = await hono.api.quzzies.mine.$get({
     query: {
       page: page ?? "1"
     }
   }, {
     init: {
-      headers: headers(),
+      headers: { cookie: cookieHeader },
       cache: "force-cache",
       next: {
         tags: ["my-quiz"]

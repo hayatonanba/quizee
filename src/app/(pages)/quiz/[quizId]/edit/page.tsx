@@ -1,10 +1,12 @@
 import EditQuizTemplate from "@/components/templates/editQuizTemplate/editQuizTemplate";
 import { hono } from "@/lib/hono/client";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 export default async function Page({ params }: { params: { quizId: string } }) {
 
   const { quizId } = params
+
+  const cookieHeader = cookies().toString();
 
   const res = await hono.api.quzzies[":quizId"].$get({
     param: {
@@ -13,7 +15,7 @@ export default async function Page({ params }: { params: { quizId: string } }) {
   }, {
     init: {
       cache: "no-store",
-      headers: headers()
+      headers: { cookie: cookieHeader }
     }
   })
 
