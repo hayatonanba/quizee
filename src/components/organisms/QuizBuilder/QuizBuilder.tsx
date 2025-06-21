@@ -4,11 +4,19 @@ import { Button } from "../../atoms/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import type { QuizFormData } from "@/store/useQuizStore";
+import { useEffect } from "react";
 
 export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData> }) {
-  const { control, watch, setValue, formState: { errors } } = Form;
+  const { control, watch, setValue, trigger, formState: { errors } } = Form;
   const { fields, append, remove } = useFieldArray({ control, name: "choices" });
   const options = watch("choices");
+
+  useEffect(() => {
+    const subscription = watch(() => {
+      trigger("choices")
+    })
+    return () => subscription.unsubscribe()
+  }, [watch, trigger])
 
   // ✅ 選択肢をチェックしたときに正解を更新
   const handleCheckboxChange = (localId: number) => {
@@ -81,6 +89,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
 
       {/* ✅ バリデーションエラー */}
       {errors.choices && <p className="text-red-500">{errors.choices.message}</p>}
+   
 
       {/* ✅ 選択肢追加ボタン */}
       {fields.length < 4 && (

@@ -14,10 +14,12 @@ export const quizSchema = z.object({
     .min(2, "最低2つの選択肢が必要です")
     .max(4, "選択肢は最大4つまでです")
     .refine((arr) => {
-      const texts = arr.map((c) => c.text);
-      return new Set(texts).size === texts.length;
+      const nonEmptyTexts = arr
+        .map((c) => c.text.trim())          
+        .filter((t) => t !== "");       
+
+      return new Set(nonEmptyTexts).size === nonEmptyTexts.length;
     }, {
       message: "選択肢のテキストが重複しています",
-      path: ["choices"],
     }),
 }).strict();
