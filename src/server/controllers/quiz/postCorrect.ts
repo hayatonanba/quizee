@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma/client";
 import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { createCorrectRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
+import { revalidateTag } from "next/cache";
 
 export const createCorrectHandler: RouteHandler<typeof createCorrectRoute, WithAuthenticatedRequest> = async (c) => {
   const { answer } = c.req.valid("json")
@@ -57,6 +58,8 @@ export const createCorrectHandler: RouteHandler<typeof createCorrectRoute, WithA
         where: { id: c.var.userId },
         data: { isAnswering: false, prevQuizId: Number(quizId) },
       });
+
+      revalidateTag("r-quiz")
     }
   });  
 }

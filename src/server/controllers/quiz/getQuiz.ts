@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma/client";
 import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { getQuizByIdRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
+import { revalidateTag } from "next/cache";
 
 export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute, WithAuthenticatedRequest> = async (c) => {
   const { quizId } = c.req.param()
@@ -38,6 +39,8 @@ export const getQuizByIdHandler: RouteHandler<typeof getQuizByIdRoute, WithAuthe
   if (!quiz) {
     return c.json(null, 404)
   }
+
+  revalidateTag("my-quiz")
 
   return c.json(quiz, 200);
 }
