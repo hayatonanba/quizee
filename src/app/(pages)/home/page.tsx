@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import HomePageTemplate from "@/components/templates/homePageTemplate/homePageTemplate";
 import { hono } from "@/lib/hono/client";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 
 export default async function Page() {
   const session = await auth()
@@ -10,12 +10,14 @@ export default async function Page() {
     return <div>認証してください。</div>
   }
 
+  const cookieHeader = cookies().toString();
+
   const [quizRes, streakRes] = await Promise.all([
     hono.api.quzzies.random.$get({},
-      { init: { cache: "force-cache", next: { tags: ["r-quiz"] }, headers: headers() } }
+      { init: { cache: "force-cache", next: { tags: ["r-quiz"] }, headers: { cookie: cookieHeader } } }
     ),
     hono.api.quzzies.currentStreak.$get({},
-      { init: { cache: "force-cache", next: { tags: ["r-quiz"] }, headers: headers() } }
+      { init: { cache: "force-cache", next: { tags: ["r-quiz"] }, headers: { cookie: cookieHeader }} }
     )
   ]);
 
