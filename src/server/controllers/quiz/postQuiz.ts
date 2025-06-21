@@ -25,11 +25,14 @@ export const createQuizHandler: RouteHandler<typeof createQuizRoute, WithAuthent
         })),
       }
     },
-    include: {
+    select: {
+      id: true,
+      question: true,
       choices: true,
+      updatedAt: true,
+      isPublic: true,
       user: {
         select: {
-          id: true,
           name: true,
           image: true
         }

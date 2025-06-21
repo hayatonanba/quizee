@@ -20,11 +20,14 @@ export const getMyQuizzesHandler: RouteHandler<typeof getMyQuizzesRoute, WithAut
     orderBy: { createdAt: "desc" },
     skip,
     take: pageSize,
-    include: {
+    select: {
+      id: true,
+      question: true,
       choices: true,
+      updatedAt: true,
+      isPublic: true,
       user: {
         select: {
-          id: true,
           name: true,
           image: true
         }
