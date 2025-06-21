@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      // Storybook のストーリーファイルだけを対象に
+      "files": ["*.stories.ts", "*.stories.tsx", "src/store/useQuizStore.ts"],
+      "rules": {
+        // このファイル群では Hooks のルールをオフにする
+        "react-hooks/rules-of-hooks": "off"
+      }
+    }
+  ]
+}

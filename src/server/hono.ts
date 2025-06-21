@@ -41,6 +41,8 @@ const mainApp = new OpenAPIHono()
 
 app.use(authMiddleware)
 app.use(cors())
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const route = app.route("/", mainApp)
 
 app.doc("/specification", {

@@ -1,5 +1,4 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { MessageSchema } from "../models/othersSchema";
+import { createRoute } from "@hono/zod-openapi";
 import { UsernameSchema } from "../models/userSchema";
 export const updateUsernameRoute = createRoute({
     path: "/{id}",
