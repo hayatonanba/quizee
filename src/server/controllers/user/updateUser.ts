@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma/client";
-import type { Username } from "@/server/models/userSchema";
 import type { updateUsernameRoute } from "@/server/routes/userRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
