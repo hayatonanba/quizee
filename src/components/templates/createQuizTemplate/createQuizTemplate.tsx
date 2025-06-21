@@ -35,7 +35,7 @@ export default function CreateQuizTemplate() {
         router.refresh();
       }
     } catch (error) {
-      console.error("Failed to submit blog:", error);
+      console.error("Failed to submit Quiz:", error);
     }
   }
 

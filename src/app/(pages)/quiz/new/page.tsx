@@ -2,8 +2,6 @@ import CreateQuizTemplate from "@/components/templates/createQuizTemplate/create
 
 export default function Page() {
   return (
-    <>
       <CreateQuizTemplate />
-    </>
   );
 }

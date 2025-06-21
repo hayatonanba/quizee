@@ -9,7 +9,7 @@ import { useState } from "react";
 
 type Choice = {
   localId: number;
-  id?: number ;
+  id: number ;
   text: string,
   isCorrect: boolean
 }
