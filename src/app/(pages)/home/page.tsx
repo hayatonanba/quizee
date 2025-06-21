@@ -11,8 +11,12 @@ export default async function Page() {
   }
 
   const [quizRes, streakRes] = await Promise.all([
-    hono.api.quzzies.random.$get({}, { init: { cache: "no-store", headers: headers() } }),
-    hono.api.quzzies.currentStreak.$get({}, { init: { cache: "no-store", headers: headers() } })
+    hono.api.quzzies.random.$get({},
+      { init: { cache: "force-cache", next: { tags: ["r-quiz"] }, headers: headers() } }
+    ),
+    hono.api.quzzies.currentStreak.$get({},
+      { init: { cache: "force-cache", next: { tags: ["r-quiz"] }, headers: headers() } }
+    )
   ]);
 
   const randomQuiz = await quizRes.json();
@@ -23,7 +27,7 @@ export default async function Page() {
   }
 
   const { question, choices, id } = randomQuiz
-  const { currentStreak }  = streakData
+  const { currentStreak } = streakData
 
   return (
     <HomePageTemplate

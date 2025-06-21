@@ -21,6 +21,7 @@ import { createCorrectHandler } from "./controllers/quiz/postCorrect";
 import { authMiddleware, type WithAuthenticatedRequest } from "./middleware/authMiddleware";
 import type { Env } from "hono"
 import { basicAuth } from "hono/basic-auth";
+import { cors } from "hono/cors"
 
 
 export const app = new OpenAPIHono().basePath("/api");
@@ -39,6 +40,7 @@ const mainApp = new OpenAPIHono()
   .route("/quzzies", quizApp)
 
 app.use(authMiddleware)
+app.use(cors())
 const route = app.route("/", mainApp)
 
 app.doc("/specification", {
@@ -46,8 +48,8 @@ app.doc("/specification", {
   info: { title: "Quizee API", version: "1.0.0" },
 }).use('/doc/*', async (c, next) => {
   const auth = basicAuth({
-    username: process.env.API_DOC_BASIC_AUTH_USER as string, 
-    password: process.env.API_DOC_BASIC_AUTH_PASS as string, 
+    username: process.env.API_DOC_BASIC_AUTH_USER as string,
+    password: process.env.API_DOC_BASIC_AUTH_PASS as string,
   });
   return auth(c, next);
 }).get("/doc", swaggerUI({ url: "/api/specification" }));

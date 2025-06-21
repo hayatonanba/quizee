@@ -14,8 +14,11 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
     }
   }, {
     init: {
-      cache: "no-store",
-      headers: headers()
+      headers: headers(),
+      cache: "force-cache",
+      next: {
+        tags: ["my-quiz"]
+      }
     }
   })
 

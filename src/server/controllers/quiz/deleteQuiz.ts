@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma/client";
 import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { deleteQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
+import { revalidateTag } from "next/cache";
 
 export const deleteQuizHandler: RouteHandler<typeof deleteQuizRoute, WithAuthenticatedRequest> = async (c) => {
   const { quizId } = c.req.param()
@@ -22,6 +23,8 @@ export const deleteQuizHandler: RouteHandler<typeof deleteQuizRoute, WithAuthent
   }
 
   await prisma.quiz.delete({ where: { id: Number(quizId) } })
+
+  revalidateTag("my-quiz")
 
   return c.json(204)
 }
