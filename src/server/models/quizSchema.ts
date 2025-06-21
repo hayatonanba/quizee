@@ -78,13 +78,14 @@ export const UpdateQuizSchema = z.object({
     message: "選択肢のうち正解は1つだけにしてください",
     path: ["choices"],
   })
-  // テキストの重複禁止
   .refine((arr) => {
-    const texts = arr.map(c => c.text);
-    return new Set(texts).size === texts.length;
+    const nonEmptyTexts = arr
+      .map((c) => c.text.trim())          
+      .filter((t) => t !== "");       
+
+    return new Set(nonEmptyTexts).size === nonEmptyTexts.length;
   }, {
-    message: "選択肢のテキストはすべて異なるものにしてください",
-    path: ["choices"],
+    message: "選択肢のテキストが重複しています",
   })
   .openapi({
     example: [

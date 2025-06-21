@@ -22,6 +22,8 @@ export const useQuizStore = create<QuizStore>(() => ({
   newForm: () =>
     useForm<QuizFormData>({
       resolver: zodResolver(quizSchema),
+      mode: "onChange",
+      reValidateMode: "onChange",
       defaultValues: {
         question: "",
         choices: [
@@ -33,6 +35,8 @@ export const useQuizStore = create<QuizStore>(() => ({
   editForm: (initalData) =>
     useForm<QuizFormData>({
       resolver: zodResolver(quizSchema),
+      mode: "onChange",
+      reValidateMode: "onChange",
       defaultValues: initalData ?? {
         question: "",
         choices: [],
