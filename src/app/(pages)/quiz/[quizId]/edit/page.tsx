@@ -35,8 +35,6 @@ export default async function Page({ params }: { params: { quizId: string } }) {
   }));
 
   return (
-    <>
-      <EditQuizTemplate id={id} question={question} choices={choicesWithLocalId} isPublic={isPublic} />
-    </>
+    <EditQuizTemplate id={id} question={question} choices={choicesWithLocalId} isPublic={isPublic} />
   );
 }

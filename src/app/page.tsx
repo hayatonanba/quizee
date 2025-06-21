@@ -2,8 +2,6 @@ import TopPageTemplate from "@/components/templates/topPageTemplate/topPageTempl
 
 export default function Page() {
   return (
-    <>
-      <TopPageTemplate />
-    </>
+    <TopPageTemplate />
   );
 }

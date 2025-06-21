@@ -23,8 +23,6 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
   const { quizzes, totalPages } = content
 
   return (
-    <>
       <MyListTemplate quizzes={quizzes} totalPages={totalPages} currentPage={page} />
-    </>
   );
 }

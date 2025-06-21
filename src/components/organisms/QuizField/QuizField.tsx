@@ -62,14 +62,13 @@ export default function QuizField({ question, author, choices, id }: Props) {
         作問者 : {author}さん
       </p>
       <div className="space-y-3">
-        {choices.map((choice, i) => (
+        {choices.map((choice) => (
           <ChoiceButton
             text={choice.text}
             onClickFn={() => handleSubmit(choice.text, id)}
             isLoading={isLoading}
             isSelected={selected === choice.text} 
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            key={i}
+            key={choice.id}
           />
         ))}
       </div>

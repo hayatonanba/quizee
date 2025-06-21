@@ -12,9 +12,7 @@ export default function ChoiceButton({ onClickFn, text, isLoading, isSelected = 
       type="button"
       onClick={onClickFn}
       disabled={isLoading}
-      className={`
-        w-full text-base rounded-full border  border-black py-2 
-        ${isSelected ? "bg-gray-200" : "bg-white text-black"}
+      className={`w-full rounded-full border border-black py-2 text-base ${isSelected ? "bg-gray-200" : "bg-white text-black"}
       `}
     >
       {text}
