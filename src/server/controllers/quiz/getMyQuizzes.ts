@@ -35,7 +35,5 @@ export const getMyQuizzesHandler: RouteHandler<typeof getMyQuizzesRoute, WithAut
   const totalCount = await prisma.quiz.count({ where: { userId: c.var.userId } })
   const totalPages = Math.ceil(totalCount / pageSize)
 
-  console.log("再検証")
-
   return c.json({ quizzes, totalCount, totalPages }, 200)
 }
