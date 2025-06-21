@@ -1,18 +1,18 @@
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma/client";
+import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { getRandomQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
-export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute> = async (c) => {
+export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithAuthenticatedRequest> = async (c) => {
 
-  const session = await auth();
+  // const session = await auth();
 
-  if (!session?.user?.id) {
-    throw Error("認証してください。");
-  }
+  // if (!session?.user?.id) {
+  //   throw Error("認証してください。");
+  // }
 
   const user = await prisma.user.findUnique({
-    where: { id: session.user.id },
+    where: { id: c.var.userId },
   });
 
   if (!user) {
@@ -73,7 +73,7 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute> = asy
   const newQuiz = quizzes[0]
 
   await prisma.user.update({
-    where: { id: session.user.id },
+    where: { id: c.var.userId },
     data: {
       prevQuizId: currentQuizId,
       currentQuizId: newQuiz.id,

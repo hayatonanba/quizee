@@ -1,16 +1,16 @@
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma/client";
+import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { updateQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
 
-export const updateQuizHandler: RouteHandler<typeof updateQuizRoute> = async (c) => {
+export const updateQuizHandler: RouteHandler<typeof updateQuizRoute, WithAuthenticatedRequest> = async (c) => {
   const { question, choices, isPublic } = c.req.valid("json")
   const { quizId } = c.req.param()
-  const session = await auth()
+  // const session = await auth()
 
-  if (!session?.user?.id) {
-    throw Error("認証してください。")
-  }
+  // if (!session?.user?.id) {
+  //   throw Error("認証してください。")
+  // }
 
   const existingQuiz = await prisma.quiz.findUnique({ where: { id: Number(quizId) }, include: { choices: true } });
 
@@ -18,7 +18,7 @@ export const updateQuizHandler: RouteHandler<typeof updateQuizRoute> = async (c)
     return c.json(null, 404);
   }
 
-  if (session.user.id !== existingQuiz.userId) {
+  if (c.var.userId !== existingQuiz.userId) {
     throw Error("編集権限がありません")
   }
 
