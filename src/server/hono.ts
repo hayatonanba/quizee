@@ -40,7 +40,6 @@ const mainApp = new OpenAPIHono()
   .route("/quzzies", quizApp)
 
 app.use(authMiddleware)
-app.use(cors())
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const route = app.route("/", mainApp)
