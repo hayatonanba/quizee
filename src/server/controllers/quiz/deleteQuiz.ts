@@ -1,9 +1,7 @@
 import { prisma } from "@/lib/prisma/client";
+import type { WithAuthenticatedRequest } from "@/server/middleware/authMiddleware";
 import type { deleteQuizRoute } from "@/server/routes/quizRoutes";
 import type { RouteHandler } from "@hono/zod-openapi";
-import type { Session } from "next-auth";
-
-type WithAuthenticatedRequest = { Variables: { userId: string; session: Session } };
 
 export const deleteQuizHandler: RouteHandler<typeof deleteQuizRoute, WithAuthenticatedRequest> = async (c) => {
   const { quizId } = c.req.param()
