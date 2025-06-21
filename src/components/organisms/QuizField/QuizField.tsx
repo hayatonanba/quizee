@@ -9,12 +9,11 @@ import toast, { Toaster } from 'react-hot-toast';
 
 type Props = {
   question: string;
-  author: string;
   choices: Choice[];
   id: number;
 };
 
-export default function QuizField({ question, author, choices, id }: Props) {
+export default function QuizField({ question, choices, id }: Props) {
 
   const [isLoading, setIsLoading] = useState(false)
   const [selected, setSelected] = useState<string | null>(null);
@@ -58,9 +57,6 @@ export default function QuizField({ question, author, choices, id }: Props) {
     <div className="rounded-xl border border-black px-8 pt-4 pb-7">
       <Toaster />
       <h2 className="mb-[0.5rem] text-[1.3rem]">Q. {question}</h2>
-      <p className="mb-[0.7rem] text-right text-[0.9rem] text-gray-300">
-        作問者 : {author}さん
-      </p>
       <div className="space-y-3">
         {choices.map((choice) => (
           <ChoiceButton

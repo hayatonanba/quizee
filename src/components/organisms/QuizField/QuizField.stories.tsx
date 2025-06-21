@@ -22,7 +22,6 @@ export const Default: StoryObj<T> = {
         choices={choices}
         id={10}
         question="5番目の完全数は？"
-        author="y_ta"
       />
     );
   },

@@ -22,14 +22,13 @@ export default async function Page() {
     return <div>クイズがありません。</div>
   }
 
-  const { question, choices, user, id } = randomQuiz
+  const { question, choices, id } = randomQuiz
   const { currentStreak }  = streakData
 
   return (
     <HomePageTemplate
       question={question}
       choices={choices}
-      author={user}
       iconUrl={session?.user?.image ?? ""}
       currentStreak={currentStreak}
       id={id}
