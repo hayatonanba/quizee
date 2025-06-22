@@ -18,7 +18,7 @@
   "overrides": [
     {
       // Storybook のストーリーファイルだけを対象に
-      "files": ["*.stories.ts", "*.stories.tsx", "src/store/useQuizStore.ts"],
+      "files": ["src/store/useQuizStore.ts"],
       "rules": {
         // このファイル群では Hooks のルールをオフにする
         "react-hooks/rules-of-hooks": "off"
