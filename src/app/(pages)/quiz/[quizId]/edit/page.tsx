@@ -1,8 +1,15 @@
+import { auth } from "@/auth";
 import EditQuizTemplate from "@/components/templates/editQuizTemplate/editQuizTemplate";
 import { hono } from "@/lib/hono/client";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 export default async function Page({ params }: { params: { quizId: string } }) {
+
+  const session = await auth()
+
+  if (!session) {
+    return <div>認証してください。</div>
+  }
 
   const { quizId } = params
 
