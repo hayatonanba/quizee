@@ -11,7 +11,7 @@ export default {
 } satisfies Meta<T>;
 
 const QuizBuildHeaderWrapper: React.FC = () => {
-  const newForm = useQuizStore().newForm();
+  const newForm = useQuizStore().useNewForm();
   const { handleSubmit } = newForm;
 
   const [isChecked, setIsChecked] = useState(false);

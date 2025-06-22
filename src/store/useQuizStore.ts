@@ -1,3 +1,4 @@
+// src/store/useQuizStore.ts
 import { quizSchema } from "@/lib/schema";
 import type { CreateChoice } from "@/server/models/choiceSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -5,21 +6,18 @@ import { useForm, type UseFormReturn } from "react-hook-form";
 import { create } from "zustand";
 
 export type QuizFormData = {
-  question: string,
-  choices: (CreateChoice & { localId: number })[]
-}
-
-export type EditQuizFormData = {
-  question: string,
-}
+  question: string;
+  choices: (CreateChoice & { localId: number })[];
+};
 
 type QuizStore = {
-  newForm: () => UseFormReturn<QuizFormData>;
-  editForm: (initialData: QuizFormData) => UseFormReturn<QuizFormData>;
-}
+  useNewForm: () => UseFormReturn<QuizFormData>;
+  useEditForm: (initialData?: QuizFormData) => UseFormReturn<QuizFormData>;
+};
 
 export const useQuizStore = create<QuizStore>(() => ({
-  newForm: () =>
+  // カスタム Hook 名は必ず use で始まる
+  useNewForm: () =>
     useForm<QuizFormData>({
       resolver: zodResolver(quizSchema),
       mode: "onChange",
@@ -32,14 +30,16 @@ export const useQuizStore = create<QuizStore>(() => ({
         ],
       },
     }),
-  editForm: (initalData) =>
+
+  useEditForm: (initialData) =>
     useForm<QuizFormData>({
       resolver: zodResolver(quizSchema),
       mode: "onChange",
       reValidateMode: "onChange",
-      defaultValues: initalData ?? {
-        question: "",
-        choices: [],
-      },
+      defaultValues:
+        initialData ?? {
+          question: "",
+          choices: [],
+        },
     }),
 }));
