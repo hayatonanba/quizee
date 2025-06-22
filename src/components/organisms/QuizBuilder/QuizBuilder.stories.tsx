@@ -10,7 +10,7 @@ export default {
 } satisfies Meta<T>;
 
 const QuizBuilderWrapper: React.FC = () => {
-  const form = useQuizStore().newForm();
+  const form = useQuizStore().useNewForm();
 
   return (
     <div className="w-3/5">

@@ -17,7 +17,7 @@ type Choice = {
 export default function EditQuizTemplate({ id, question, choices, isPublic }: { id: number, question: string, choices: Choice[], isPublic: boolean }) {
 
   const router = useRouter()
-  const Form = useQuizStore().editForm({
+  const Form = useQuizStore().useEditForm({
     question: question,
     choices: choices
   })

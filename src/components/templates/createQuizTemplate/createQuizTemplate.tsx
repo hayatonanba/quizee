@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function CreateQuizTemplate() {
   const router = useRouter()
-  const Form = useQuizStore().newForm()
+  const Form = useQuizStore().useNewForm()
   const { handleSubmit } = Form;
   const [ispublished, setIsPublished] = useState(false)
   const handleToggle = () => {
