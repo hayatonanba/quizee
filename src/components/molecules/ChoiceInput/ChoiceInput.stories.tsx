@@ -7,41 +7,45 @@ type T = typeof ChoiceInput;
 export default {
   title: "molecules/ChoiceInput",
   component: ChoiceInput,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 } satisfies Meta<T>;
 
-export const ThreeOrMoreChoices: StoryObj<T> = {
-  render: () => {
-    const [isChecked, setIsChecked] = useState(false);
+const ThreeOrMoreChoicesWrapper: React.FC = () => {
+  const [isChecked, setIsChecked] = useState(false);
 
-    return (
-      <div className="w-1/3">
-        <ChoiceInput
-          choice={{ isCorrect: isChecked, text: "" }}
-          isRemovable={true}
-          handleCheckBoxChange={() => setIsChecked(!isChecked)}
-          handleRemoveOption={() => alert("Delete!!")}
-          placeholder="１つ目の選択肢"
-        />
-      </div>
-    );
-  },
+  return (
+    <div className="w-1/3">
+      <ChoiceInput
+        choice={{ isCorrect: isChecked, text: "" }}
+        isRemovable={true}
+        handleCheckBoxChange={() => setIsChecked(prev => !prev)}
+        handleRemoveOption={() => alert("Delete!!")}
+        placeholder="１つ目の選択肢"
+      />
+    </div>
+  );
+};
+
+const TwoOrFewerChoicesWrapper: React.FC = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  return (
+    <div className="w-1/3">
+      <ChoiceInput
+        choice={{ isCorrect: isChecked, text: "" }}
+        isRemovable={false}
+        handleCheckBoxChange={() => setIsChecked(prev => !prev)}
+        handleRemoveOption={() => alert("Delete!!")}
+        placeholder="１つ目の選択肢"
+      />
+    </div>
+  );
+};
+
+export const ThreeOrMoreChoices: StoryObj<T> = {
+  render: () => <ThreeOrMoreChoicesWrapper />,
 };
 
 export const TwoOrFewerChoices: StoryObj<T> = {
-  render: () => {
-    const [isChecked, setIsChecked] = useState(false);
-
-    return (
-      <div className="w-1/3">
-        <ChoiceInput
-          choice={{ isCorrect: isChecked, text: "" }}
-          isRemovable={false}
-          handleCheckBoxChange={() => setIsChecked(!isChecked)}
-          handleRemoveOption={() => alert("Delete!!")}
-          placeholder="１つ目の選択肢"
-        />
-      </div>
-    )
-  }
-}
+  render: () => <TwoOrFewerChoicesWrapper />,
+};

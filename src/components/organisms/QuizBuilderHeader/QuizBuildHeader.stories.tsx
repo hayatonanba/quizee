@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import QuizBuildHeader from "./QuizBuildHeader";
 import { useQuizStore } from '@/store/useQuizStore';
-import { useState } from 'react';
 
 type T = typeof QuizBuildHeader;
 
@@ -10,29 +10,33 @@ export default {
   component: QuizBuildHeader,
 } satisfies Meta<T>;
 
-export const Default: StoryObj<T> = {
-  render: () => {
+const QuizBuildHeaderWrapper: React.FC = () => {
+  const newForm = useQuizStore().newForm();
+  const { handleSubmit } = newForm;
 
-    const newForm = useQuizStore().newForm()
-    const { handleSubmit } = newForm
+  const [isChecked, setIsChecked] = useState(false);
 
-    const onSubmit = () => {
-      if (isChecked) {
-        alert("公開する")
-      } else {
-        alert("保存する")
-      }
+  const handleToggle = () => {
+    setIsChecked(prev => !prev);
+  };
+
+  const onSubmit = () => {
+    if (isChecked) {
+      alert("公開する");
+    } else {
+      alert("保存する");
     }
+  };
 
-    const [isChecked, setIsChecked] = useState(false);
+  return (
+    <QuizBuildHeader
+      onClickFn={handleSubmit(onSubmit)}
+      isChecked={isChecked}
+      handleToggle={handleToggle}
+    />
+  );
+};
 
-    const handleToggle = () => {
-      const newChecked = !isChecked;
-      setIsChecked(newChecked);
-    };
-
-    return (
-      <QuizBuildHeader onClickFn={handleSubmit(onSubmit)} isChecked={isChecked} handleToggle={handleToggle} />
-    )
-  }
+export const Default: StoryObj<T> = {
+  render: () => <QuizBuildHeaderWrapper />,
 };
