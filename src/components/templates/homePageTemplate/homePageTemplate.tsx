@@ -8,18 +8,19 @@ type Props = {
   id: number;
   choices: Choice[],
   iconUrl: string,
-  currentStreak: number
+  currentStreak: number,
+  prevAnswer?: string | null;
 }
 
-export default function HomePageTemplate({ question, id, choices, iconUrl, currentStreak }: Props) {
+export default function HomePageTemplate({ question, id, choices, iconUrl, currentStreak, prevAnswer }: Props) {
   return (
-    <div className="mx-auto flex h-screen max-w-[700px] items-center justify-center px-3">
-      <div className="mb-[120px] flex-1">
+    <div className="mx-auto flex min-h-[calc(100vh-60px)] max-w-[650px] items-center justify-center px-2">
+      <div className="mb-[50px] flex-1 md:mb-[90px]">
         <div className="mb-[50px] flex justify-center">
           <StreakBubbleWithIcon iconUrl={iconUrl} streakCount={currentStreak} color="black" />
         </div>
         <div className="mb-[50px]">
-          <QuizField id={id} question={question} choices={choices}/>
+          <QuizField id={id} question={question} choices={choices} prevAnswer={prevAnswer}/>
         </div>
         <div className="flex justify-center">
           <HomeButtons />

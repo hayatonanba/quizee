@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/atoms/Button";
 import PagenationButton from "@/components/molecules/Pagination/Pagination";
 import MyListHeader from "@/components/organisms/MyListHeader/MyListHeader";
 import { QuizCard } from "@/components/organisms/QuizCard";
+import { Button } from "@/components/ui/button";
 import { hono } from "@/lib/hono/client";
 import type { Quiz } from "@/server/models/quizSchema";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type Props = {
   quizzes: Quiz[];
@@ -23,9 +24,12 @@ export default function MyListTemplate({
   totalPages,
   currentPage,
 }: Props) {
+
   const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async (quizId: string) => {
+    setIsDeleting(true)
     try {
       const res = await hono.api.quzzies[":quizId"].$delete({
         param: { quizId },
@@ -36,6 +40,8 @@ export default function MyListTemplate({
       }
     } catch (err) {
       console.error("削除に失敗しました。", err)
+    } finally {
+      setIsDeleting(false)
     }
   };
 
@@ -44,7 +50,7 @@ export default function MyListTemplate({
   };
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-60px)]">
       <div className="mb-[40px]">
         <MyListHeader link="/home" />
       </div>
@@ -52,7 +58,13 @@ export default function MyListTemplate({
         {quizzes.length === 0 && (
           <div className="text-center">
             <p className="mb-3 font-semibold text-gray-400">さあ、新しいクイズを作ろう！</p>
-            <Button size="sm" type="button">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              type="button"
+              className="rounded-full border-black"
+            >
               <Link className="flex items-center gap-2" href="/quiz/new">
                 <FontAwesomeIcon icon={faPencil} className="size-[20px]" />
                 作問する
@@ -70,6 +82,7 @@ export default function MyListTemplate({
                 choices={quiz.choices}
                 isPublic={quiz.isPublic}
                 updatedAt={format(quiz.updatedAt, "yyyy/MM/dd")}
+                isDeleting={isDeleting}
               />
             </div>
           );

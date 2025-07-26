@@ -1,7 +1,7 @@
-import { signOut } from "@/auth";
-import { faSignOut } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import LogoutButton from "@/components/others/LogoutButton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { User } from "lucide-react";
 import Image from "next/image";
 import { tv, type VariantProps } from "tailwind-variants";
 
@@ -45,24 +45,23 @@ export default function StreakBubbleWithIcon({ streakCount, iconUrl }: Props) {
       <div className="relative">
         <Image src="/hukidasi.png" alt="" width={90} height={90} />
         <Popover>
-          <PopoverTrigger className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-            <Image
-              src={iconUrl}
-              alt=""
-              width={45}
-              height={45}
-              className="rounded-full border"
-            />
+          <PopoverTrigger
+            className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+            <Avatar
+              className="h-[45px] w-[45px] border"
+            >
+              <AvatarImage
+                width={45}
+                height={45}
+                src={iconUrl}
+              />
+              <AvatarFallback>
+                <User />
+              </AvatarFallback>
+            </Avatar>
           </PopoverTrigger>
-          <PopoverContent className="relative z-10 w-[150px] rounded-md border bg-white px-3 py-2 shadow-md" align="start">
-            <form action={async () => {
-              "use server"
-              await signOut({ redirectTo: "/" })
-            }}>
-              <button type="submit" className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faSignOut} className="size-[20px]" />ログアウト
-              </button>
-            </form>
+          <PopoverContent className="relative z-10 w-[120px] rounded-md border bg-white p-0 shadow-md" align="start">
+            <LogoutButton />
           </PopoverContent>
         </Popover>
       </div>

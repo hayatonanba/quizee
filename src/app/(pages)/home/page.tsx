@@ -38,6 +38,7 @@ export default async function Page() {
       iconUrl={session?.user?.image ?? ""}
       currentStreak={currentStreak}
       id={id}
+      prevAnswer={randomQuiz.prevAnswer} 
     />
   );
 }
