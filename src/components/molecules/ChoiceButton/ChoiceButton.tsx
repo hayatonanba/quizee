@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 // ChoiceButton.tsx
 type Props = {
   onClickFn: () => void;
@@ -8,14 +10,18 @@ type Props = {
 
 export default function ChoiceButton({ onClickFn, text, isLoading, isSelected = false }: Props) {
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
+      size="lg"
       onClick={onClickFn}
       disabled={isLoading}
-      className={`w-full rounded-full border border-black py-2 text-base ${isSelected ? "bg-gray-200" : "bg-white text-black"}
-      `}
+      className={`flex w-full justify-start gap-3 rounded-lg border border-black py-2 ${isSelected ? "" : ""} `}
     >
       {text}
-    </button>
+      {isSelected && (
+        <span className="h-3 w-3 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+      )}
+    </Button>
   );
 }

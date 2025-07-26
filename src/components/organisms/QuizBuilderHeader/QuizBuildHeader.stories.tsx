@@ -33,6 +33,7 @@ const QuizBuildHeaderWrapper: React.FC = () => {
       onClickFn={handleSubmit(onSubmit)}
       isChecked={isChecked}
       handleToggle={handleToggle}
+      isSubmmitting={false}
     />
   );
 };

@@ -34,6 +34,7 @@ export const Public: StoryObj<T> = {
           isPublic={true}
           updatedAt={quiz.updatedAt}
           handleSubmit={handleSubmit}
+          isDeleting={false}
         />
       </div>
     )
@@ -65,6 +66,7 @@ export const Private = {
           isPublic={false}
           updatedAt={quiz.updatedAt}
           handleSubmit={handleSubmit}
+          isDeleting={false}
         />
       </div>
     )

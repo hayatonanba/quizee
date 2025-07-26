@@ -1,16 +1,18 @@
-import { Button } from "@/components/atoms/Button";
 import { SwitchButton } from "@/components/atoms/SwitchButton";
+import { Button } from "@/components/ui/button";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Globe2, Loader2, Save } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
   onClickFn: () => void;
   isChecked: boolean;
   handleToggle: () => void;
+  isSubmmitting: boolean;
 }
 
-export default function QuizBuildHeader({ onClickFn, isChecked, handleToggle }: Props) {
+export default function QuizBuildHeader({ onClickFn, isChecked, handleToggle, isSubmmitting }: Props) {
 
   return (
     <div className="border-gray-300 border-b">
@@ -18,11 +20,15 @@ export default function QuizBuildHeader({ onClickFn, isChecked, handleToggle }: 
         <Link href="/home"><FontAwesomeIcon className="size-7" icon={faArrowLeft} /></Link>
         <div className="flex items-center gap-5">
           <SwitchButton handleToggle={handleToggle} isChecked={isChecked} />
-          <div className={`rounded-full ${isChecked ? "bg-green-400": "bg-white"}`}>
-            <Button type="submit" size="sm" onClickFn={onClickFn}>
-              {isChecked ? "公開する" : "保存する"}
-            </Button>
-          </div>
+          <Button
+            type="submit" onClick={onClickFn}
+            variant="outline"
+            disabled={isSubmmitting}
+            className={`rounded-full border border-black ${isChecked ? "bg-green-400 hover:bg-green-500/80" : "bg-white"}`}
+          >
+            {isSubmmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : isChecked ? <Globe2 className="h-5 w-5"/>:<Save className="h-5 w-5"/> }
+            {isChecked ? "公開する" : "保存する"}
+          </Button>
         </div>
       </header>
     </div>

@@ -1,10 +1,10 @@
 import { ChoiceInput } from "@/components/molecules/ChoiceInput";
 import { Controller, useFieldArray, type UseFormReturn } from "react-hook-form";
-import { Button } from "../../atoms/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import type { QuizFormData } from "@/store/useQuizStore";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData> }) {
   const { control, watch, setValue, trigger, formState: { errors } } = Form;
@@ -55,9 +55,9 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
         control={control}
         render={({ field }) => (
           <>
-            <input
+            <textarea
               {...field}
-              className="w-full border-black border-b p-2 text-[1.3rem] focus:outline-none"
+              className="min-h-[50px] w-full border-black border-b p-2 text-[1.3rem] focus:outline-none"
               placeholder="問題文"
             />
             {errors.question && <p className="text-red-500">{errors.question.message}</p>}
@@ -96,8 +96,10 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
         <div className="flex justify-center">
           <Button
             type="button"
-            onClickFn={() => addOption()}
-            size="sm"
+            onClick={() => addOption()}
+            size="lg"
+            variant="outline"
+            className="rounded-full border border-black"
           >
             <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faPlus} className="size-[20px]" />選択肢を追加する

@@ -10,7 +10,7 @@ import { useState } from "react";
 export default function CreateQuizTemplate() {
   const router = useRouter()
   const Form = useQuizStore().useNewForm()
-  const { handleSubmit } = Form;
+  const { handleSubmit, formState: { isSubmitting } } = Form;
   const [ispublished, setIsPublished] = useState(false)
   const handleToggle = () => {
     const newChecked = !ispublished;
@@ -40,12 +40,13 @@ export default function CreateQuizTemplate() {
   }
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-60px)]">
       <div className="mb-[50px]">
         <QuizBuildHeader
           onClickFn={handleSubmit(onSubmit)}
           isChecked={ispublished}
           handleToggle={handleToggle}
+          isSubmmitting={isSubmitting}
         />
       </div>
       <div className="mx-auto max-w-[700px] px-3">

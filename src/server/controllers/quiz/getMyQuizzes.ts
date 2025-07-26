@@ -12,7 +12,7 @@ export const getMyQuizzesHandler: RouteHandler<typeof getMyQuizzesRoute, WithAut
   //   throw Error("認証してください。")
   // }
 
-  const pageSize = 5
+  const pageSize = 4
   const skip = (Number(page) - 1) * pageSize
 
   const quizzes = await prisma.quiz.findMany({

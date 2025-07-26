@@ -41,7 +41,13 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
       }
     });
     if (quiz) {
-      return c.json(quiz, 200);
+
+      const ArrangedQuiz = {
+        ...quiz,
+        prevAnswer: "yes",
+      }
+
+      return c.json(ArrangedQuiz, 200);
     }
   }
 
@@ -86,5 +92,19 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
     }
   });
 
-  return c.json(newQuiz, 200);
+  const correct = await prisma.quiz.findUnique({
+    where: { id: user.prevQuizId as number },
+    include: {
+      choices: {
+        where: { isCorrect: true },
+      },
+    },
+  });
+
+  const ArrangedNewQuiz = {
+    ...newQuiz,
+    prevAnswer: correct ? correct.choices[0].text : "問題が削除されてしまいました。",
+  } 
+
+  return c.json(ArrangedNewQuiz, 200);
 }

@@ -1,3 +1,4 @@
+
 "use client"
 
 import { QuizBuilder } from "@/components/organisms/QuizBuilder";
@@ -9,7 +10,7 @@ import { useState } from "react";
 
 type Choice = {
   localId: number;
-  id: number ;
+  id: number;
   text: string,
   isCorrect: boolean
 }
@@ -21,7 +22,9 @@ export default function EditQuizTemplate({ id, question, choices, isPublic }: { 
     question: question,
     choices: choices
   })
-  const { handleSubmit } = Form;
+  const { handleSubmit,
+    formState: { isSubmitting }
+  } = Form;
   const [ispublished, setIsPublished] = useState(isPublic)
   const handleToggle = () => {
     const newChecked = !ispublished;
@@ -55,9 +58,10 @@ export default function EditQuizTemplate({ id, question, choices, isPublic }: { 
 
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-60px)]">
       <div className="mb-[50px]">
         <QuizBuildHeader
+          isSubmmitting={isSubmitting}
           onClickFn={handleSubmit(onSubmit)}
           isChecked={ispublished}
           handleToggle={handleToggle}
