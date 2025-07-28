@@ -56,6 +56,7 @@ export default function QuizBuilder({ Form }: { Form: UseFormReturn<QuizFormData
         render={({ field }) => (
           <>
             <textarea
+              rows={1}
               {...field}
               className="min-h-[50px] w-full border-black border-b p-2 text-[1.3rem] focus:outline-none"
               placeholder="問題文"

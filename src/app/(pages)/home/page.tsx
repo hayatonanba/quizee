@@ -39,6 +39,7 @@ export default async function Page() {
       currentStreak={currentStreak}
       id={id}
       prevAnswer={randomQuiz.prevAnswer} 
+      prevQuizQuestion={randomQuiz.prevQuiz}
     />
   );
 }
