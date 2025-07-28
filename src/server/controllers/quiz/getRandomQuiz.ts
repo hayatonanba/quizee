@@ -41,10 +41,18 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
       }
     });
     if (quiz) {
+      const prevQuiz =
+      user.prevQuizId
+        ? await prisma.quiz.findUnique({
+            where: { id: user.prevQuizId },
+            select: { question: true },
+          })
+        : null;
 
       const ArrangedQuiz = {
         ...quiz,
         prevAnswer: "yes",
+        prevQuiz: prevQuiz ? prevQuiz.question : null,
       }
 
       return c.json(ArrangedQuiz, 200);
@@ -101,9 +109,18 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
     },
   });
 
+  const prevQuiz =
+  user.prevQuizId
+    ? await prisma.quiz.findUnique({
+        where: { id: user.prevQuizId },
+        select: { question: true },
+      })
+    : null;
+
   const ArrangedNewQuiz = {
     ...newQuiz,
     prevAnswer: correct ? correct.choices[0].text : "問題が削除されてしまいました。",
+    prevQuiz: prevQuiz ? prevQuiz.question : null,
   } 
 
   return c.json(ArrangedNewQuiz, 200);

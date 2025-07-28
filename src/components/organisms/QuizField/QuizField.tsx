@@ -1,6 +1,7 @@
 "use client"
 
 import { ChoiceButton } from "@/components/molecules/ChoiceButton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { hono } from "@/lib/hono/client";
 import type { Choice } from "@/server/models/choiceSchema";
 import { useRouter } from "next/navigation";
@@ -12,9 +13,10 @@ type Props = {
   choices: Choice[];
   id: number;
   prevAnswer?: string | null;
+  prevQuizQuestion?: string | null; // これは使用されていないので削除
 };
 
-export default function QuizField({ question, choices, id, prevAnswer }: Props) {
+export default function QuizField({ question, choices, id, prevAnswer, prevQuizQuestion }: Props) {
 
   const [isLoading, setIsLoading] = useState(false)
   const [selected, setSelected] = useState<string | null>(null);
@@ -72,13 +74,17 @@ export default function QuizField({ question, choices, id, prevAnswer }: Props) 
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <div key={i} className="h-[40px]" />
         ))}
-
-        <div className="relative rounded-lg bg-yellow-300/50 p-3">
-          <div className="absolute top-0 right-0 bg-white px-3 py-1 text-xs">一個前の答え</div>
-          <div className="text-center">
-            {isLoading ? `${"判定中.."}` : prevAnswer}
-          </div>
-        </div>
+         <Accordion type="single" collapsible defaultValue="item-1">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>前回の問題</AccordionTrigger>
+            <AccordionContent>
+              <div className="space-y-3 text-center">
+                <p>問題文：{isLoading ? `${"判定中.."}` : (prevQuizQuestion ?? "なし")}</p>
+                <p>正しい答え：{isLoading ? `${"判定中.."}` : (prevAnswer ?? "なし")}</p>                                
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
 
     </div>
