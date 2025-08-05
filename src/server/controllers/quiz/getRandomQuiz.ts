@@ -49,14 +49,16 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
           })
         : null;
       
-      const correct = await prisma.quiz.findUnique({
-        where: { id: user.prevQuizId as number },
-        include: {
-          choices: {
-            where: { isCorrect: true },
-          },
-        },
-      });
+      const correct = 
+      user.prevQuizId
+       ? await prisma.quiz.findUnique({
+            where: { id: user.prevQuizId },
+            include: {
+              choices: {
+                where: { isCorrect: true },
+              },
+            },
+        }):null;
 
       const ArrangedQuiz = {
         ...quiz,
@@ -109,14 +111,16 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
     }
   });
 
-  const correct = await prisma.quiz.findUnique({
-    where: { id: user.prevQuizId as number },
-    include: {
-      choices: {
-        where: { isCorrect: true },
-      },
-    },
-  });
+  const correct = 
+  user.prevQuizId
+      ? await prisma.quiz.findUnique({
+        where: { id: user.prevQuizId },
+        include: {
+          choices: {
+            where: { isCorrect: true },
+          },
+        },
+    }):null;
 
   const prevQuiz =
   user.prevQuizId
