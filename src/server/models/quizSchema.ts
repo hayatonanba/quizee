@@ -36,7 +36,7 @@ export const RandomQuizSchema = QuizSchema.extend({
   prevAnswer: z.string().openapi({
     example: "yes"
   }),
-  prevQuiz: z.string().nullable().openapi({
+  prevQuiz: z.string().openapi({
     example: "前のクイズの問題文"
   }),
 })

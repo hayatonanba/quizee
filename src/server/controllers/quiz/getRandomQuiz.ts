@@ -48,11 +48,20 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
             select: { question: true },
           })
         : null;
+      
+      const correct = await prisma.quiz.findUnique({
+        where: { id: user.prevQuizId as number },
+        include: {
+          choices: {
+            where: { isCorrect: true },
+          },
+        },
+      });
 
       const ArrangedQuiz = {
         ...quiz,
-        prevAnswer: "yes",
-        prevQuiz: prevQuiz ? prevQuiz.question : null,
+        prevAnswer: correct ? correct.choices[0].text : "問題がありません",
+        prevQuiz: prevQuiz ? prevQuiz.question : "問題がありません",
       }
 
       return c.json(ArrangedQuiz, 200);
@@ -120,7 +129,7 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
   const ArrangedNewQuiz = {
     ...newQuiz,
     prevAnswer: correct ? correct.choices[0].text : "問題が削除されてしまいました。",
-    prevQuiz: prevQuiz ? prevQuiz.question : null,
+    prevQuiz: prevQuiz ? prevQuiz.question : "問題が削除されてしまいました。",
   } 
 
   return c.json(ArrangedNewQuiz, 200);
