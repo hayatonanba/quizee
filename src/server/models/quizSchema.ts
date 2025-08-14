@@ -36,6 +36,9 @@ export const RandomQuizSchema = QuizSchema.extend({
   prevAnswer: z.string().openapi({
     example: "yes"
   }),
+  prevQuiz: z.string().openapi({
+    example: "前のクイズの問題文"
+  }),
 })
 
 export const CreateQuizSchema = z.object({

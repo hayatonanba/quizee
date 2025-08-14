@@ -41,10 +41,29 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
       }
     });
     if (quiz) {
+      const prevQuiz =
+      user.prevQuizId
+        ? await prisma.quiz.findUnique({
+            where: { id: user.prevQuizId },
+            select: { question: true },
+          })
+        : null;
+      
+      const correct = 
+      user.prevQuizId
+       ? await prisma.quiz.findUnique({
+            where: { id: user.prevQuizId },
+            include: {
+              choices: {
+                where: { isCorrect: true },
+              },
+            },
+        }):null;
 
       const ArrangedQuiz = {
         ...quiz,
-        prevAnswer: "yes",
+        prevAnswer: correct ? correct.choices[0].text : "問題がありません",
+        prevQuiz: prevQuiz ? prevQuiz.question : "問題がありません",
       }
 
       return c.json(ArrangedQuiz, 200);
@@ -92,18 +111,29 @@ export const getRandomQuizHandler: RouteHandler<typeof getRandomQuizRoute, WithA
     }
   });
 
-  const correct = await prisma.quiz.findUnique({
-    where: { id: user.prevQuizId as number },
-    include: {
-      choices: {
-        where: { isCorrect: true },
-      },
-    },
-  });
+  const correct = 
+  user.prevQuizId
+      ? await prisma.quiz.findUnique({
+        where: { id: user.prevQuizId },
+        include: {
+          choices: {
+            where: { isCorrect: true },
+          },
+        },
+    }):null;
+
+  const prevQuiz =
+  user.prevQuizId
+    ? await prisma.quiz.findUnique({
+        where: { id: user.prevQuizId },
+        select: { question: true },
+      })
+    : null;
 
   const ArrangedNewQuiz = {
     ...newQuiz,
     prevAnswer: correct ? correct.choices[0].text : "問題が削除されてしまいました。",
+    prevQuiz: prevQuiz ? prevQuiz.question : "問題が削除されてしまいました。",
   } 
 
   return c.json(ArrangedNewQuiz, 200);
